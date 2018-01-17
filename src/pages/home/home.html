@@ -1,17 +1,57 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    
+    <table class="icon-table">
+      <td><ion-icon id="notification-button" class="custom-icon" name="md-notifications" >
+         <ion-badge id="notifications-badge" color="danger">0</ion-badge>
+      </ion-icon></td>
+      <td><ion-icon class="custom-icon" name="md-contact" (click)="clickProfile()"></ion-icon></td>
+
+    </table> 
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content >
+    
+        <ion-card  *ngFor="let event of events; let i= index"  >
+           
+            <ion-item (click)="clickEvent(event, i)"> 
+             
+              
+              <h1>{{event.title}}</h1>
+              
+              
+              
+              
+            </ion-item>
+    
+            <img (click)="clickEvent(event, i)" src="http://placehold.it/500x200" />
+            <ion-card-content (click)="clickEvent(event, i)">
+             
+                <!-- <p >
+                  {{time[i].start}}-{{time[i].end}}
+                </p> -->
+          
+                <p>
+                 {{event.desc}}
+                </p>
+                <ion-item>
+                    <ion-icon name='md-pin' ></ion-icon>
+                    {{event.location}}
+                    </ion-item>
+              
+          
+              </ion-card-content>
+              <button  (click)="addEvent(event,i)" color="secondary" ion-button round outline item-end icon-left>
+                  <ion-icon name="add"></ion-icon>
+                  Join
+                </button>
+          </ion-card>
+    
+  
+  <ion-fab (click)="clickAddEvent()">
+    <button ion-fab><ion-icon class="custom-icon" name="add" ></ion-icon></button>
+  </ion-fab>
+  
+
 </ion-content>
