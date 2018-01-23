@@ -20,6 +20,8 @@ import { ProfilePage } from '../pages/profile/profile';
 import { ParallaxHeaderDirective } from '../directives/parallax/parallax';
 import { EventsPage } from '../pages/events/events';
 import { AddEventPage } from '../pages/add-event/add-event';
+import { MychatsPage } from '../pages/mychats/mychats';
+import { EventInfoPage } from '../pages/event-info/event-info';
 @NgModule({
   declarations: [
     MyApp,
@@ -29,7 +31,9 @@ import { AddEventPage } from '../pages/add-event/add-event';
     TabsPage,
     ProfilePage,
     ParallaxHeaderDirective,
-    EventsPage
+    EventsPage,
+    MychatsPage,
+    EventInfoPage
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,9 @@ import { AddEventPage } from '../pages/add-event/add-event';
     HomePage,
     TabsPage,
     ProfilePage,
-    EventsPage
+    EventsPage,
+    MychatsPage,
+    EventInfoPage
   ],
   providers: [
     StatusBar,
