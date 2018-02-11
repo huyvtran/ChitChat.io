@@ -1,57 +1,14 @@
 <ion-header>
   <ion-navbar>
-    <p>hi</p>
-    <table class="icon-table">
-      <td><ion-icon id="notification-button" class="custom-icon" name="md-notifications" >
-         <ion-badge id="notifications-badge" color="danger">0</ion-badge>
-      </ion-icon></td>
-      <td><ion-icon class="custom-icon" name="md-contact" (click)="clickProfile()"></ion-icon></td>
-
-    </table> 
+    <ion-title>
+      Map
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="addMarker()"><ion-icon name="add"></ion-icon>Add Marker</button>
+    </ion-buttons> 
   </ion-navbar>
 </ion-header>
-
-<ion-content >
-    
-        <ion-card  *ngFor="let event of events; let i= index"  >
-           
-            <ion-item (click)="clickEvent(event, i)"> 
-             
-              
-              <h1>{{event.title}}</h1>
-              
-              
-              
-              
-            </ion-item>
-    
-            <img (click)="clickEvent(event, i)" src="http://placehold.it/500x200" />
-            <ion-card-content (click)="clickEvent(event, i)">
-             
-                <!-- <p >
-                  {{time[i].start}}-{{time[i].end}}
-                </p> -->
-          
-                <p>
-                 {{event.desc}}
-                </p>
-                <ion-item>
-                    <ion-icon name='md-pin' ></ion-icon>
-                    {{event.location}}
-                    </ion-item>
-              
-          
-              </ion-card-content>
-              <button  (click)="addEvent(event,i)" color="secondary" ion-button round outline item-end icon-left>
-                  <ion-icon name="add"></ion-icon>
-                  Join
-                </button>
-          </ion-card>
-    
-  
-  <ion-fab (click)="clickAddEvent()">
-    <button ion-fab><ion-icon class="custom-icon" name="add" ></ion-icon></button>
-  </ion-fab>
-  
-
+ 
+<ion-content>
+  <div #map id="map"></div> 
 </ion-content>

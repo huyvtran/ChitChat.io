@@ -1,28 +1,54 @@
-import {Component} from '@angular/core';
-
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AngularFireDatabase} from "angularfire2/database-deprecated";
+/**
+* Generated class for the ChatPage page.
+*
+* See http://ionicframework.com/docs/components/#navigation for more info
+* on Ionic pages and navigation.
+*/
+//@IonicPage()
 @Component({
-  selector: 'chat-bubble',
-  inputs: ['msg: message'],
-  template:
-
-  <div class="chatBubble">
-    <div class="chat-bubble {{msg.position}}">
-      <div class="message">{{msg.content}}</div>
-      <div class="message-detail">
-          <span style="font-weight:bold;">{{msg.senderName}} </span>,
-          <span>{{msg.time}}</span>
-      </div>
-    </div>
-  </div>
-
+  selector: 'page-chat',
+  templateUrl: 'chat.html',
 })
-export class ChatBubble {
-  constructor() {
-    this.msg = {
-      content :  'Am I dreaming?',
-      position : 'left',
-      time : '12/3/2016',
-      senderName : 'Gregory'
+export class ChatPage {
+
+  username: string = '';
+  message: string = '';
+  _chatSubscription;
+  messages: object[] = [];
+
+  constructor(public db: AngularFireDatabase,
+    public navCtrl: NavController, public navParams: NavParams) {
+      this.username = this.navParams.get('username');
+      this._chatSubscription = this.db.list('/chat').subscribe( data => {
+        this.messages = data;
+      });
+    }
+
+    sendMessage() {
+      this.db.list('/chat').push({
+        username: this.username,
+        message: this.message
+      }).then( () => {
+        // message is sent
+      })
+      this.message = '';
+    }
+
+    ionViewDidLoad() {
+      this.db.list('/chat').push({
+        specialMessage: true,
+        message: `${this.username} has joined the room`
+      });
+    }
+
+    ionViewWillLeave(){
+      this._chatSubscription.unsubscribe();
+      this.db.list('/chat').push({
+        specialMessage: true,
+        message: `${this.username} has left the room`
+      });
     }
   }
-}
