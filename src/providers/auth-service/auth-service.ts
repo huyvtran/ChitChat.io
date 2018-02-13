@@ -46,7 +46,7 @@ export class AuthService{
             var userID=data.rows.item(i).userID;
               if(data.rows.item(i).pass==credentials.password){
                   login=true;
-                   alert(true);
+                   
                    
               }
               observer.next(login);

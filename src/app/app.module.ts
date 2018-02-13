@@ -2,7 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-
+import { LocationSelectPage } from '../pages/location-select/location-select';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -25,6 +25,10 @@ import { EventInfoPage } from '../pages/event-info/event-info';
 import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
 import { AngularFireModule } from 'angularfire2';
 import { ChatPage } from '../pages/chat/chat';
+import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
+import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
+import { Network } from '@ionic-native/network';
+
 var config = {
   apiKey: "AIzaSyCTJT08mbl9Vpp7x2G0WSrQpjf-0sRTEbY",
   authDomain: "chat-c50e8.firebaseapp.com",
@@ -47,7 +51,9 @@ var config = {
     EventsPage,
     MychatsPage,
     EventInfoPage,
-    ChatPage
+    ChatPage,
+    LocationSelectPage,
+    AddEventPage
   ],
   imports: [
     BrowserModule,
@@ -68,7 +74,9 @@ var config = {
     EventsPage,
     MychatsPage,
     EventInfoPage,
-    ChatPage
+    ChatPage,
+    LocationSelectPage,
+    AddEventPage
   ],
   providers: [
     StatusBar,
@@ -78,7 +86,10 @@ var config = {
     DatabaseProvider,
     SQLitePorter,
     SQLite,
-    Geolocation
+    Geolocation,
+    ConnectivityServiceProvider,
+    GoogleMapsProvider,
+    Network
   ]
 })
 export class AppModule {}

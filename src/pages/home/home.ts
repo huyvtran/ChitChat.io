@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { DatabaseProvider } from '../../providers/database/database';
+import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 declare var google;
  
 @Component({
@@ -12,9 +13,10 @@ declare var google;
 export class HomePage {
  
   @ViewChild('map') mapElement: ElementRef;
+
   map: any;
  
-  constructor(public navCtrl: NavController, public geolocation: Geolocation, private auth: AuthService, private databaseprovider: DatabaseProvider) {
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, private auth: AuthService, private databaseprovider: DatabaseProvider, public maps: GoogleMapsProvider,) {
     databaseprovider.setUserID(this.auth.getUserInfo().userID);
   }
   addMarker(){
@@ -48,21 +50,11 @@ export class HomePage {
  
   loadMap(){
  
-    this.geolocation.getCurrentPosition().then((position) => {
- 
-      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
- 
-      let mapOptions = {
-        center: latLng,
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
- 
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
- 
-    }, (err) => {
-      console.log(err);
-    });
+    let mapLoaded = this.maps.init(this.mapElement.nativeElement, null).then(() => {
+            
+
+
+  });
  
   }
  

@@ -5,6 +5,7 @@ import { DatabaseProvider } from './../../providers/database/database';
 import {ProfilePage} from '../profile/profile';
 
 import { EventInfoPage } from '../event-info/event-info';
+import { AddEventPage } from '../add-event/add-event';
 @Component({
   selector: 'page-events',
   templateUrl: 'events.html'
@@ -28,15 +29,10 @@ export class EventsPage {
 
 
   public clickAddEvent()
-  {
-  const myModal = this.modal.create('AddEventPage',{userID:this.auth.getUserInfo().userID});
-  myModal.present();
-  myModal.onDidDismiss(data => {
-    this.getEvents();
- //update events
-  
-  
-    });
+  {   this.navCtrl.push(AddEventPage, {
+    userID:this.auth.getUserInfo().userID
+   });
+
   }
 
   public clickProfile()

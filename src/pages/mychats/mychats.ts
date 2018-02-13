@@ -26,9 +26,9 @@ export class MychatsPage {
     console.log('ionViewDidLoad MychatsPage');
   }
   clickEvent(event, i){
-    alert("Hi")
+    
     this.navCtrl.push(ChatPage, {
-       username:"Michael"
+       username:this.auth.getUserInfo().firstname+" "+this.auth.getUserInfo().lastname
      });
   }
 
@@ -40,7 +40,7 @@ export class MychatsPage {
        
           this.databaseprovider.getEveryEventForUser().then(data => {
               this.myChats = data;
-              alert(this.myChats.length);
+         
         
               
             })

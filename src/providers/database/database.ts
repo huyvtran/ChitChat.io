@@ -54,7 +54,7 @@ export class DatabaseProvider {
     //       })
     //       .catch(e => console.error(e));
     //   });
-    alert("Creating tables");
+   
     this.databaseReady.next(true);
     this.database.executeSql("CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY AUTOINCREMENT,creatorID INTEGER,userID INTEGER,title TEXT,desc TEXT,location TEXT, start SMALLDATETIME, end SMALLDATETIME, length FLOAT,public TEXT)", err => {
       alert('Error: ');
