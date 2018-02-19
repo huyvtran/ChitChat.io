@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ModalController } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 import { DatabaseProvider } from './../../providers/database/database';
 import { AuthService } from './../../providers/auth-service/auth-service';
 import { ToastController } from 'ionic-angular';
+import { LocationSelectPage } from '../location-select/location-select';
 //import {HomePage} from '../home/home';
 /**
  * Generated class for the AddEventPage page.
@@ -33,7 +34,7 @@ export class AddEventPage {
   chart:any;
   pub
   add=true;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewController:ViewController,private databaseprovider: DatabaseProvider, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewController:ViewController,private databaseprovider: DatabaseProvider, private toastCtrl: ToastController, public modalCtrl: ModalController) {
         this.startDate=new Date().toISOString();
         this.endDate=new Date().toISOString();
         var m=new Date(this.startDate);
@@ -156,5 +157,15 @@ changeStart(ionicButton){
     
   })
 }
+launchLocationPage(){
+ 
+  let modal = this.modalCtrl.create(LocationSelectPage);
 
+  modal.onDidDismiss((location) => {
+      console.log(location);
+  });
+
+  modal.present();   
+
+}
 }

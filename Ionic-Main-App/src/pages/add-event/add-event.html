@@ -24,7 +24,7 @@
       <ion-label color="primary">Description</ion-label>
       <ion-input [(ngModel)]="desc" placeholder="Description"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item (click)="launchLocationPage()">
       <ion-label color="primary">Location</ion-label>
       <ion-input [(ngModel)]="location" placeholder="Location"></ion-input>
     </ion-item>
@@ -38,6 +38,12 @@
       <ion-label color="primary">End Date</ion-label>
         <ion-datetime displayFormat="DD-MM-YYYY HH:mm" [max]="max" [min]="startDate" [(ngModel)]="endDate"></ion-datetime>
       </ion-item>
+
+      <ion-item>
+        <ion-label color="primary">Outdoor Event?</ion-label>
+         <ion-toggle [(ngModel)] = "outside" ></ion-toggle>
+      </ion-item>
+
       
   </ion-list>
 

@@ -3,15 +3,16 @@ import { Component } from '@angular/core';
 import { AboutPage } from '../about/about';
 import { ContactPage } from '../contact/contact';
 import { HomePage } from '../home/home';
-import {MychatsPage} from '../mychats/mychats';
+import {ChatPage} from '../chat/chat';
+import {EventsPage} from '../events/events';
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = MychatsPage;
-  tab3Root = ContactPage;
+  tab2Root = EventsPage;
+  tab3Root = ChatPage;
 
   constructor() {
 
