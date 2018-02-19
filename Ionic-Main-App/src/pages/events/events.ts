@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController, ToastController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
-import { DatabaseProvider } from './../../providers/database/database';
+//import { DatabaseProvider } from './../../providers/database/database';
 import {ProfilePage} from '../profile/profile';
 import { EventInfoPage } from '../event-info/event-info';
-import { AddEventPage } from '../add-event/add-event';
 import { MyApp } from '../../app/app.component';
 import firebase from 'firebase';
 import { EventbuilderPage } from '../../pages/eventbuilder/eventbuilder';

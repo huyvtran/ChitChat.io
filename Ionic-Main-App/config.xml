@@ -88,4 +88,5 @@
     </plugin>
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
     <allow-navigation href="http://10.27.241.195:8100" />
+    <allow-navigation href="http://10.31.29.64:8100" />
 </widget>
