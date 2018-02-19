@@ -6,6 +6,7 @@ import * as firebase from 'firebase';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 import { EventsPage } from '../pages/events/events';
+import { HomePage } from '../pages/home/home';
 
 const config = {
   apiKey: "AIzaSyCNATg5Q8TZqnxW3PhaqdMNfan9zobQMTs",
@@ -30,7 +31,7 @@ export class MyApp {
           this.rootPage = 'LoginPage';
           unsubscribe();
         }  else { 
-          this.rootPage = 'LoginPage';
+          this.rootPage = 'HomePage';
           console.log('ERROR');
            unsubscribe();
          } 
