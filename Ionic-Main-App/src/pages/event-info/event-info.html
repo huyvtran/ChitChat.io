@@ -1,0 +1,52 @@
+
+<ion-header >
+  
+  <ion-title>{{title}}</ion-title>
+
+</ion-header>
+
+<ion-content >
+
+  <ion-card >
+    <ion-item>
+      <ion-avatar (click)="clickProfile()" item-start>
+        <img src="img/bjork-live.jpg">
+      </ion-avatar>
+      <h2 (click)="clickProfile()">{{firstName}} {{lastName}}</h2>
+    </ion-item>
+      <img src="img/bjork-live.jpg"/>
+      <ion-item>
+        <ion-icon name='heart-outline'></ion-icon>
+        Likes
+        <ion-badge item-end>9</ion-badge>
+      </ion-item>
+      <ion-card-content>
+     
+        <p>
+         <!-- {{start}}-{{end}} -->
+        </p>
+  
+        <p>
+         {{desc}}
+        </p>
+        <ion-item>
+            <ion-icon name='md-pin' ></ion-icon>
+            {{location}}
+            </ion-item>
+            <ion-item (click)="viewAttendees()">
+          <ion-icon name='md-people'></ion-icon>
+          People Attending
+          <ion-badge item-end>{{attendees.length}}</ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-icon name='md-paper-plane'></ion-icon>
+          Share With Friends
+          
+        </ion-item>
+        <button (click)="removeEvent()" ion-button small color="danger">{{button}}</button>
+      </ion-card-content>
+      
+    </ion-card>
+
+
+</ion-content>
