@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ModalController } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 import { DatabaseProvider } from './../../providers/database/database';
-import { AuthService } from './../../providers/auth-service/auth-service';
+//import { AuthService } from './../../providers/auth-service/auth-service';
 import { ToastController } from 'ionic-angular';
 import { LocationSelectPage } from '../location-select/location-select';
 //import {HomePage} from '../home/home';

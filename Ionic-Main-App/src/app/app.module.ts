@@ -29,6 +29,7 @@ import { FirebaseProvider } from '../providers/firebase/firebase';
 import { AuthProvider } from '../providers/auth/auth';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginPage } from '../pages/login/login';
+import { EventProvider } from '../providers/eventCreate/eventCreate';
 
   const config = {
     apiKey: "AIzaSyCNATg5Q8TZqnxW3PhaqdMNfan9zobQMTs",
@@ -49,6 +50,7 @@ import { LoginPage } from '../pages/login/login';
     ProfilePage,
     ParallaxHeaderDirective,
     EventsPage,
+    LoginPage,
     EventInfoPage,
     ChatPage,
     LocationSelectPage,
@@ -72,6 +74,7 @@ import { LoginPage } from '../pages/login/login';
     TabsPage,
     ProfilePage,
     EventsPage,
+    LoginPage,
     EventInfoPage,
     ChatPage,
     LocationSelectPage,
@@ -89,7 +92,8 @@ import { LoginPage } from '../pages/login/login';
     GoogleMapsProvider,
     Network,
     FirebaseProvider,
-    AuthProvider
+    AuthProvider,
+    EventProvider
   ]
 })
 export class AppModule {}

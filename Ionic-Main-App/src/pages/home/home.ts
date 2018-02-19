@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-import { AuthService } from '../../providers/auth-service/auth-service';
+import { AuthProvider } from '../../providers/auth/auth';
 import { DatabaseProvider } from '../../providers/database/database';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 declare var google;
@@ -16,8 +16,8 @@ export class HomePage {
 
   map: any;
  
-  constructor(public navCtrl: NavController, public geolocation: Geolocation, private auth: AuthService, private databaseprovider: DatabaseProvider, public maps: GoogleMapsProvider,) {
-    databaseprovider.setUserID(this.auth.getUserInfo().userID);
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, private auth: AuthProvider, public maps: GoogleMapsProvider,) { //private databaseprovider: DatabaseProvider,
+   // databaseprovider.setUserID(this.auth.getUserInfo().userID);
   }
   addMarker(){
  
