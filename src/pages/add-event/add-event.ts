@@ -88,6 +88,8 @@ setUserID(id){
         }
         //get last event id entered
         //then add user to that event
+        //hello
+        
         this.databaseprovider.addUserToEvent(id,this.userID);
         this.loadEventData();
         this.closeModal();
