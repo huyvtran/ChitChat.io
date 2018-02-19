@@ -6,7 +6,7 @@ import {ProfilePage} from '../profile/profile';
 import { EventInfoPage } from '../event-info/event-info';
 import { AddEventPage } from '../add-event/add-event';
 import { MyApp } from '../../app/app.component';
-
+import firebase from 'firebase';
 import { EventbuilderPage } from '../../pages/eventbuilder/eventbuilder';
 
 
@@ -21,13 +21,15 @@ export class EventsPage {
   allevents = new Array();
   add=true;
   userID: any;
-  constructor(public navCtrl: NavController, private auth: AuthProvider, private modal:ModalController,private toastCtrl: ToastController) { //private databaseprovider: DatabaseProvider,
+  constructor(public navCtrl: NavController, private auth: AuthProvider, private modal:ModalController, private toastCtrl: ToastController) { //private databaseprovider: DatabaseProvider,
     // let info = this.auth.getUserInfo();
     // this.username = info['firstname'];
     // this.email = info['email'];
     // this.userID=this.auth.getUserInfo().userID;
     // databaseprovider.setUserID(this.auth.getUserInfo().userID);
-    // this.getEvents();
+     this.getEvents();
+
+
   }
 
 
@@ -43,9 +45,9 @@ export class EventsPage {
 
   public clickProfile()
   {
-      this.navCtrl.push(ProfilePage, {
+     // this.navCtrl.push(ProfilePage, {
       //  userID:this.auth.getUserInfo().userID
-      });
+     // });
   
   }
 
@@ -58,6 +60,11 @@ clickSports(){
 }
 
   getEvents(){
+
+    firebase.database().ref('/events').on('child_added', (dataSnap) => {
+      this.events.push(dataSnap.val())
+    });
+    console.log(this.events);
     // this.databaseprovider.getDatabaseState().subscribe(rdy => {
     //   this.events=new Array();
     //   if (rdy) {
@@ -74,15 +81,15 @@ clickSports(){
   }
 
   clickEvent(event, i){
-    this.navCtrl.push(EventInfoPage, {
-      title: event.title,
-      desc:event.desc,
-      location:event.location,
-      eventID:event.eventID,
-      button:"Join",
-      userID:event.userID,
-      usereventID:event.usereventID
-  });
+  //   this.navCtrl.push(EventInfoPage, {
+  //     title: event.title,
+  //     desc:event.desc,
+  //     location:event.location,
+  //     eventID:event.eventID,
+  //     button:"Join",
+  //     userID:event.userID,
+  //     usereventID:event.usereventID
+  // });
   }
 
   public addEvent(event,i){

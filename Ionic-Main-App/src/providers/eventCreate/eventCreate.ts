@@ -14,7 +14,7 @@ export class EventProvider {
 
    createEvent(eventName: string, description: Text, location: Location, eventStartDate: Date, eventStartTime: Time, eventEndDate: Date, eventEndTime: Time): Promise<any> {
 
-      firebase
+     return Promise.resolve(firebase
         .database()
         .ref('/events')
         .push({ eventName: eventName, 
@@ -24,8 +24,7 @@ export class EventProvider {
           eventStartTime: eventStartTime,
           eventEndDate: eventEndDate,
           eventEndTime: eventEndTime
-        });
-        console.log(eventName + description + location);
-    return null;
+        }));
+       // console.log(eventName + description + location);
     }
   }
