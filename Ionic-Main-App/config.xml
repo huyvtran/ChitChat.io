@@ -88,7 +88,4 @@
     </plugin>
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
     <allow-navigation href="http://10.27.241.195:8100" />
-    <engine name="browser" />
-    <engine name="android" spec="7.0.0" />
-    <engine name="ios" />
 </widget>
