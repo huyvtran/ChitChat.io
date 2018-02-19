@@ -27,7 +27,9 @@ export class EventsPage {
   }
 
 
-
+  ionViewDidEnter(){
+    this.getEvents();
+  }
   public clickAddEvent()
   {   this.navCtrl.push(AddEventPage, {
     userID:this.auth.getUserInfo().userID
