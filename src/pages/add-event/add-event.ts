@@ -5,6 +5,7 @@ import { DatabaseProvider } from './../../providers/database/database';
 import { AuthService } from './../../providers/auth-service/auth-service';
 import { ToastController } from 'ionic-angular';
 import { LocationSelectPage } from '../location-select/location-select';
+import { AngularFireDatabase} from "angularfire2/database-deprecated";
 //import {HomePage} from '../home/home';
 /**
  * Generated class for the AddEventPage page.
@@ -34,7 +35,7 @@ export class AddEventPage {
   chart:any;
   pub
   add=true;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewController:ViewController,private databaseprovider: DatabaseProvider, private toastCtrl: ToastController, public modalCtrl: ModalController) {
+  constructor(public db: AngularFireDatabase,public navCtrl: NavController, public navParams: NavParams, public viewController:ViewController,private databaseprovider: DatabaseProvider, private toastCtrl: ToastController, public modalCtrl: ModalController) {
         this.startDate=new Date().toISOString();
         this.endDate=new Date().toISOString();
         var m=new Date(this.startDate);
@@ -75,6 +76,18 @@ setUserID(id){
        this.end=end;
        var theeventID=new Array();
      if(this.add==true){
+
+      this.db.list('/events').push({
+        title: this.title,
+        desc: this.desc,
+        location: this.location,
+         start: start,
+         end:end,
+         userID:this.userID,
+         creatorID:this.userID
+      }).then( () => {
+        // message is sent
+      })
     this.databaseprovider.addEvent(this.userID,this.userID,this.title,this.desc, this.location,start,end,hours,this.pub)
     .then(data => {
       //get last event id entered
