@@ -28,10 +28,10 @@ export class MyApp {
     platform.ready().then(() => {
       const unsubscribe = firebase.auth().onAuthStateChanged( user => {
         if (!user) {
-          this.rootPage = 'LoginPage';
+          this.rootPage = 'LoginPage'; //No user and goes to Login Page
           unsubscribe();
         }  else { 
-          this.rootPage = 'HomePage';
+          this.rootPage = 'LoginPage'; //Yes user and goes to Home Page
           console.log('ERROR');
            unsubscribe();
          } 

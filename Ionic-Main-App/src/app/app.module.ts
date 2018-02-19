@@ -10,8 +10,6 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { Geolocation } from '@ionic-native/geolocation';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { AuthService } from '../providers/auth-service/auth-service';
-import { DatabaseProvider } from '../providers/database/database';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpModule } from '@angular/http';
 import { SQLitePorter } from '@ionic-native/sqlite-porter';
@@ -20,7 +18,6 @@ import { ProfilePage } from '../pages/profile/profile';
 import { ParallaxHeaderDirective } from '../directives/parallax/parallax';
 import { EventsPage } from '../pages/events/events';
 import { AddEventPage } from '../pages/add-event/add-event';
-import { MychatsPage } from '../pages/mychats/mychats';
 import { EventInfoPage } from '../pages/event-info/event-info';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
@@ -52,7 +49,6 @@ import { LoginPage } from '../pages/login/login';
     ProfilePage,
     ParallaxHeaderDirective,
     EventsPage,
-    MychatsPage,
     EventInfoPage,
     ChatPage,
     LocationSelectPage,
@@ -76,7 +72,6 @@ import { LoginPage } from '../pages/login/login';
     TabsPage,
     ProfilePage,
     EventsPage,
-    MychatsPage,
     EventInfoPage,
     ChatPage,
     LocationSelectPage,
@@ -87,8 +82,6 @@ import { LoginPage } from '../pages/login/login';
     SplashScreen,
     HttpClientModule,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthService,
-    DatabaseProvider,
     SQLitePorter,
     SQLite,
     Geolocation,

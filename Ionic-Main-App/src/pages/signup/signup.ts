@@ -3,7 +3,7 @@ import { IonicPage, NavController, Loading, LoadingController, AlertController }
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { EmailValidator } from '../../validators/email';
-import { HomePage } from '../home/home';
+import { LoginPage } from '../../pages/login/login';
 
 @IonicPage()
 @Component({
@@ -21,6 +21,8 @@ export class SignupPage {
     public alertCtrl: AlertController
   ) {
       this.signupForm = formBuilder.group({
+        firstName: [''],
+        lastName: [''],
         email: ['', 
           Validators.compose([Validators.required, EmailValidator.isValid])],
         password: ['', 
@@ -32,11 +34,11 @@ export class SignupPage {
       if (!this.signupForm.valid){
         console.log(this.signupForm.value);
       } else {
-        this.authProvider.signupUser(this.signupForm.value.email, 
+        this.authProvider.signupUser(this.signupForm.value.firstName, this.signupForm.value.lastName, this.signupForm.value.email, 
           this.signupForm.value.password)
         .then(() => {
           this.loading.dismiss().then( () => {
-            this.navCtrl.setRoot(HomePage);
+            this.navCtrl.setRoot(LoginPage);
           });
         }, (error) => {
           this.loading.dismiss().then( () => {

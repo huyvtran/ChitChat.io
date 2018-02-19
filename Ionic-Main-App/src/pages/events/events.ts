@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, ModalController, ToastController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { DatabaseProvider } from './../../providers/database/database';
+
 import {ProfilePage} from '../profile/profile';
 
 import { EventInfoPage } from '../event-info/event-info';
