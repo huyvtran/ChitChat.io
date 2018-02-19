@@ -23,7 +23,7 @@ export class EventProvider {
           eventStartDate: eventStartDate,
           eventStartTime: eventStartTime,
           eventEndDate: eventEndDate,
-          eventEndTime: eventEndTime
+          eventEndTime: eventEndTime,
         }));
        // console.log(eventName + description + location);
     }

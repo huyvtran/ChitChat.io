@@ -17,9 +17,10 @@ import { EventbuilderPage } from '../../pages/eventbuilder/eventbuilder';
 export class EventsPage {
   username = '';
   email = '';
-  events=new Array();
+  events = new Array();
+  keys = new Array();
   allevents = new Array();
-  add=true;
+  add = true;
   userID: any;
   constructor(public navCtrl: NavController, private auth: AuthProvider, private modal:ModalController, private toastCtrl: ToastController) { //private databaseprovider: DatabaseProvider,
     // let info = this.auth.getUserInfo();
@@ -51,33 +52,28 @@ export class EventsPage {
   
   }
 
-clickSports(){
-  this.navCtrl.push(EventsPage, {
-    // userID:this.auth.getUserInfo().userID,
-    events:this.events,
-    title:"Sports"
-   });
-}
+  // clickSports(){
+  //   this.navCtrl.push(EventsPage, {
+  //     // userID:this.auth.getUserInfo().userID,
+  //     events:this.events,
+  //     title:"Sports"
+  //   });
+  // }
 
   getEvents(){
-
     firebase.database().ref('/events').on('child_added', (dataSnap) => {
       this.events.push(dataSnap.val())
+      this.keys.push(dataSnap.key)
     });
-    console.log(this.events);
-    // this.databaseprovider.getDatabaseState().subscribe(rdy => {
-    //   this.events=new Array();
-    //   if (rdy) {
-       
-    //       this.databaseprovider.getEvents().then(data => {
-    //           this.events = data;
-        
-              
-    //         })
-      
-    //   }
 
-    // })
+
+  }
+
+  deleteEvent(anEvent, i){
+    firebase.database().ref('/events/' + this.keys[i]).remove();
+      this.events.splice(i,1);
+      this.keys.splice(i,1);
+   //   console.log(this.events[i]);
   }
 
   clickEvent(event, i){
