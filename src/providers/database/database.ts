@@ -80,6 +80,7 @@ export class DatabaseProvider {
       alert(err);
       return err;
     });
+  
     // let data = ["Get Groceries", "Go to the store and get groceries", "The store",new Date(),new Date(),new Date()];
     // this.database.executeSql("INSERT INTO events (title,desc,location,date, start, end) VALUES (?, ?, ?,?,?,?)", data)
     // , err => {

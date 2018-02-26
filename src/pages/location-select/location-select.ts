@@ -16,6 +16,7 @@ export class LocationSelectPage {
     longitude: number;
     autocompleteService: any;
     placesService: any;
+    
     query: string = '';
     places: any = [];
     searchDisabled: boolean;

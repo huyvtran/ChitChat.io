@@ -6,6 +6,7 @@ import { AuthService } from './../../providers/auth-service/auth-service';
 import { ToastController } from 'ionic-angular';
 import { LocationSelectPage } from '../location-select/location-select';
 import { AngularFireDatabase} from "angularfire2/database-deprecated";
+import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 //import {HomePage} from '../home/home';
 /**
  * Generated class for the AddEventPage page.
@@ -20,6 +21,7 @@ import { AngularFireDatabase} from "angularfire2/database-deprecated";
   templateUrl: 'add-event.html',
 })
 export class AddEventPage {
+  
  userID: any;
  start
  end
@@ -35,7 +37,7 @@ export class AddEventPage {
   chart:any;
   pub
   add=true;
-  constructor(public db: AngularFireDatabase,public navCtrl: NavController, public navParams: NavParams, public viewController:ViewController,private databaseprovider: DatabaseProvider, private toastCtrl: ToastController, public modalCtrl: ModalController) {
+  constructor(public db: AngularFireDatabase,public maps: GoogleMapsProvider,public navCtrl: NavController, public navParams: NavParams, public viewController:ViewController,private databaseprovider: DatabaseProvider, private toastCtrl: ToastController, public modalCtrl: ModalController) {
         this.startDate=new Date().toISOString();
         this.endDate=new Date().toISOString();
         var m=new Date(this.startDate);
@@ -177,7 +179,15 @@ launchLocationPage(){
   let modal = this.modalCtrl.create(LocationSelectPage);
 
   modal.onDidDismiss((location) => {
-      console.log(location);
+      this.location=location.name;
+      var myLatLng = {lat: location.lat, lng: location.lng};
+      this.db.list('/locations').push({
+       lat: location.lat,
+       lng: location.lng
+      }).then( () => {
+        // message is sent
+      })
+      this
   });
 
   modal.present();   

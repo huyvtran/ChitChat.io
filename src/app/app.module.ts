@@ -28,6 +28,8 @@ import { ChatPage } from '../pages/chat/chat';
 import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
 import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
 import { Network } from '@ionic-native/network';
+import { GoogleMapsClusterProvider } from '../providers/google-maps-cluster/google-maps-cluster';
+import { GoogleMaps} from '../providers/google-maps2/google-maps2';
 
 var config = {
   apiKey: "AIzaSyCTJT08mbl9Vpp7x2G0WSrQpjf-0sRTEbY",
@@ -89,7 +91,9 @@ var config = {
     Geolocation,
     ConnectivityServiceProvider,
     GoogleMapsProvider,
-    Network
+    Network,
+    GoogleMapsClusterProvider,
+    GoogleMaps
   ]
 })
 export class AppModule {}
