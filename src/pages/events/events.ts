@@ -3,6 +3,7 @@ import { NavController, ModalController, ToastController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { DatabaseProvider } from './../../providers/database/database';
 import {ProfilePage} from '../profile/profile';
+import { EventBuilderPage } from '../event-builder/event-builder';
 
 import { EventInfoPage } from '../event-info/event-info';
 import { AddEventPage } from '../add-event/add-event';
@@ -31,8 +32,8 @@ export class EventsPage {
     this.getEvents();
   }
   public clickAddEvent()
-  {   this.navCtrl.push(AddEventPage, {
-    userID:this.auth.getUserInfo().userID
+  {   this.navCtrl.push(EventBuilderPage, {
+    
    });
 
   }

@@ -30,6 +30,8 @@ import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
 import { Network } from '@ionic-native/network';
 import { GoogleMapsClusterProvider } from '../providers/google-maps-cluster/google-maps-cluster';
 import { GoogleMaps} from '../providers/google-maps2/google-maps2';
+import { EventCreateProvider } from '../providers/event-create/event-create';
+import { EventBuilderPage } from '../pages/event-builder/event-builder';
 
 var config = {
   apiKey: "AIzaSyCTJT08mbl9Vpp7x2G0WSrQpjf-0sRTEbY",
@@ -55,7 +57,9 @@ var config = {
     EventInfoPage,
     ChatPage,
     LocationSelectPage,
-    AddEventPage
+    AddEventPage,
+    EventBuilderPage
+    
   ],
   imports: [
     BrowserModule,
@@ -78,7 +82,9 @@ var config = {
     EventInfoPage,
     ChatPage,
     LocationSelectPage,
-    AddEventPage
+    AddEventPage,
+    EventBuilderPage
+    
   ],
   providers: [
     StatusBar,
@@ -93,7 +99,8 @@ var config = {
     GoogleMapsProvider,
     Network,
     GoogleMapsClusterProvider,
-    GoogleMaps
+    GoogleMaps,
+    EventCreateProvider
   ]
 })
 export class AppModule {}
