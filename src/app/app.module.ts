@@ -24,6 +24,7 @@ import { MychatsPage } from '../pages/mychats/mychats';
 import { EventInfoPage } from '../pages/event-info/event-info';
 import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ChatPage } from '../pages/chat/chat';
 import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
 import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
@@ -32,6 +33,9 @@ import { GoogleMapsClusterProvider } from '../providers/google-maps-cluster/goog
 import { GoogleMaps} from '../providers/google-maps2/google-maps2';
 import { EventCreateProvider } from '../providers/event-create/event-create';
 import { EventBuilderPage } from '../pages/event-builder/event-builder';
+import { AuthProvider } from '../providers/auth/auth';
+import { EmailProvider } from '../providers/email/email';
+
 
 var config = {
   apiKey: "AIzaSyCTJT08mbl9Vpp7x2G0WSrQpjf-0sRTEbY",
@@ -67,7 +71,8 @@ var config = {
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(config),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -100,7 +105,9 @@ var config = {
     Network,
     GoogleMapsClusterProvider,
     GoogleMaps,
-    EventCreateProvider
+    EventCreateProvider,
+    AuthProvider,
+    EmailProvider
   ]
 })
 export class AppModule {}

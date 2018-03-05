@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { DatabaseProvider } from './../../providers/database/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+
 export class User {
   firstname: string;
   email: string;
   lastname:string;
   userID:Number;
-  constructor(userID:Number,name: string,lastname:string, email: string) {
+  constructor(userID:Number,name: string,lastname:string, email: string,) {
     this.firstname = name;
     this.email = email;
     this.lastname=lastname;
@@ -20,7 +22,8 @@ export class User {
 export class AuthService{
   currentUser: User;
   database:DatabaseProvider;
-  constructor( private databaseprovider: DatabaseProvider) {
+  constructor( private databaseprovider: DatabaseProvider,
+    public fAuth: AngularFireAuth, ) {
     
     this.database=databaseprovider;
   }
@@ -30,6 +33,14 @@ export class AuthService{
     } else {
       return Observable.create(observer => {
         // At this point make a request to your backend to make a real check!
+        var r = this.fAuth.auth.signInWithEmailAndPassword(
+          credentials.email,
+          credentials.password
+        );
+        if (r) {
+          alert("Successfully logged in!");
+         // navCtrl.setRoot('LoginPage');
+        }
         //let access = this.database.loginUser(credentials.email,credentials.password);
         this.database.database.executeSql("SELECT * FROM users WHERE email=? AND pass=?", [credentials.email,credentials.password]).then((data) => {
           var login=false;
@@ -71,6 +82,14 @@ export class AuthService{
       return Observable.throw("Please insert credentials");
     } else {
       // At this point store the credentials to your backend!
+      var r = this.fAuth.auth.createUserWithEmailAndPassword(
+        credentials.email,
+        credentials.password
+      );
+      if (r) {
+        alert("Successfully registered!");
+       // navCtrl.setRoot('LoginPage');
+      }
       this.database.addUser(credentials.first, credentials.last,credentials.email,credentials.password);
       return Observable.create(observer => {
         observer.next(true);
