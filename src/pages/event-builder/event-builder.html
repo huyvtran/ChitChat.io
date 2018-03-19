@@ -13,45 +13,55 @@
 </ion-header>
 
 <ion-content padding>
-  <form [formGroup]="eventCreateForm" (submit)="createEvent()" novalidate>
-
-    <ion-item>
-      <ion-label stacked>Event Name</ion-label>
-      <ion-input formControlName="eventName" type="text" placeholder="Event Name" required="required"> </ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label stacked>Description</ion-label>
-      <ion-input formControlName="description" type="text" placeholder="Event Desciription"> </ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label stacked>Location</ion-label>
-      <ion-input formControlName="location" type="email" placeholder="City, State" required="required"></ion-input>
-    </ion-item>
-
+  
+  <ion-item>
+    <ion-row>
+      <ion-col width-50>
+        <button ion-button color="danger" type="button" full round large (click)="takePhoto()">
+                    <ion-icon name="md-camera"></ion-icon>
+                </button>
+      </ion-col>
+      <ion-col width-50>
+        <button ion-button color="secondary" type="button" full round large (click)="selectPhoto()">
+                    <ion-icon name="md-image"></ion-icon>
+                </button>
+      </ion-col>
+    </ion-row>
+  </ion-item>
+  <ion-item>
+    <img class="img-responsive" src="{{ myPhotoURL }}" />
+  </ion-item>
+      <ion-item>
+          <ion-label color="primary">Title</ion-label>
+          <ion-input [(ngModel)]="title" placeholder="Title"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Description</ion-label>
+          <ion-input [(ngModel)]="desc" placeholder="Description"></ion-input>
+        </ion-item>
+        <ion-item (click)="selectLocation()">
+          <ion-label color="primary">Location</ion-label>
+          <ion-input [(ngModel)]="location" placeholder="Location"></ion-input>
+        </ion-item>
     <ion-item>
       <ion-label stacked>Event Start Date</ion-label>
-      <ion-input formControlName="startDate" type="date" placeholder="xx/xx/xxxx" required="required"></ion-input>
+      <ion-input (ionChange)="changeStartDate()" [(ngModel)]="startDate" type="date" placeholder="xx/xx/xxxx" required="required"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label stacked>Event Start Time</ion-label>
-      <ion-input formControlName="startTime" type="time" required="required"></ion-input>
+      <ion-input (ionChange)="changeStartTime()"  [(ngModel)]="startTime" type="time" required="required"></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label stacked>Event End Date</ion-label>
-        <ion-input formControlName="endDate" type="date" placeholder="xx/xx/xxxx" required="required"></ion-input>
+        <ion-input [(ngModel)]="endDate" type="date" placeholder="xx/xx/xxxx" required="required"></ion-input>
       </ion-item>
 
     <ion-item>
         <ion-label stacked>Event End Time</ion-label>
-        <ion-input formControlName="endTime" type="time" required="required"></ion-input>
+        <ion-input [(ngModel)]="endTime" type="time" required="required"></ion-input>
       </ion-item>
 
-    <button ion-button block type="submit" [disabled]="!eventCreateForm.valid">
-      Create Event
-    </button>
-  </form>
+      <button ion-button full #btn (click)="createEvent()">Add</button>
 </ion-content>

@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, Loading, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, Loading, LoadingController, AlertController,ModalController  } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EventsPage } from '../../pages/events/events';
 import { EventCreateProvider } from '../../providers/event-create/event-create';
+import { LocationSelectPage} from '../location-select/location-select';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database-deprecated';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import firebase from 'firebase';
 /**
  * Generated class for the EventbuilderPage page.
  *
@@ -15,33 +20,133 @@ import { EventCreateProvider } from '../../providers/event-create/event-create';
   selector: 'page-eventbuilder',
   templateUrl: 'event-builder.html',
 })
+
 export class EventBuilderPage {
   public eventCreateForm: FormGroup;
   public loading: Loading;
+  userID: any;
+  start
+  end
+   startDate
+   endDate
+   location
+   title
+   startTime
+   endTime
+   desc
+   event = {};
+   events = new Array();
+   allevents = new Array();
+   max
+   chart:any;
+   pub
+   lat
+   lng
+   public myPhotosRef: any;
+   public myPhoto: any;
+   public myPhotoURL: any;
+   imageID
+   add=true;
   constructor(
     public eventProvider: EventCreateProvider,
     public navCtrl: NavController, 
     public formBuilder: FormBuilder, 
     public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+   public modalCtrl: ModalController,
+   public fAuth: AngularFireAuth,
+   public db: AngularFireDatabase,
+   private camera: Camera
+   
   ) {
-      this.eventCreateForm = formBuilder.group({
-        eventName: [''],
-        description: [''],
-        location: [''],
-        startDate: [''], 
-        startTime: [''],
-        endDate: [''],
-        endTime: ['']
+    this.imageID='null'
+    this.userID=this.fAuth.auth.currentUser.uid;
+    this.myPhotosRef = firebase.storage().ref('/Photos/');
+      // this.eventCreateForm = formBuilder.group({
+      //   eventName: [''],
+      //   description: [''],
+      //   location: [''],
+      //   startDate: [''], 
+      //   startTime: [''],
+      //   endDate: [''],
+      //   endTime: [''],
+      //   lat:[''],
+      //   lng:['']
+      // });
+    }
+    takePhoto() {
+      this.camera.getPicture({
+        quality: 100,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        sourceType: this.camera.PictureSourceType.CAMERA,
+        encodingType:this.camera.EncodingType.PNG,
+        saveToPhotoAlbum: true
+      }).then(imageData => {
+        this.myPhoto = imageData;
+        this.uploadPhoto();
+      }, error => {
+        console.log("ERROR -> " + JSON.stringify(error));
       });
     }
+    selectPhoto(): void {
+      this.camera.getPicture({
+        sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        quality: 100,
+        encodingType: this.camera.EncodingType.PNG,
+      }).then(imageData => {
+        this.myPhoto = imageData;
 
+        this.uploadPhoto();
+      }, error => {
+        console.log("ERROR -> " + JSON.stringify(error));
+      });
+    }
+   
+    private uploadPhoto(): void {
+      this.imageID=this.generateUUID()
+      this.myPhotosRef.child(this.imageID).child('image.png')
+        .putString(this.myPhoto, 'base64', { contentType: 'image/png' })
+        .then((savedPicture) => {
+          this.myPhotoURL = savedPicture.downloadURL;
+        });
+    }
+   
+    private generateUUID(): any {
+      var d = new Date().getTime();
+      var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx'.replace(/[xy]/g, function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      });
+      return uuid;
+    }
+    changeStartTime(){
+  //     var end=new Date(this.startDate);
+  // end.setTime(end.getTime()+60*60000);
+  // this.endDate=end.toISOString();
+      
+    }
+    changeStartDate(){}
+    selectLocation(){
+     
+      let modal = this.modalCtrl.create(LocationSelectPage);
+      modal.onDidDismiss((location) => {
+        this.location=location.name;
+        var myLatLng = {lat: location.lat, lng: location.lng};
+        
+        this.lat=location.lat;
+        this.lng =location.lng
+     
+       
+    });
+      modal.present();   
+    }
     createEvent(){
-    if (!this.eventCreateForm.valid){
-      console.log(this.eventCreateForm.value);
-    } else {
-      this.eventProvider.createEvent(this.eventCreateForm.value.eventName, this.eventCreateForm.value.description, this.eventCreateForm.value.location, this.eventCreateForm.value.startDate, this.eventCreateForm.value.startTime, this.eventCreateForm.value.endDate, this.eventCreateForm.value.endTime)
+    
+      this.eventProvider.createEvent(this.myPhotoURL,this.userID,this.title, this.desc, this.location, this.startDate, this.startTime, this.endDate, this.endTime,this.lat,this.lng)
       .then(() => {
+        
         this.loading.dismiss().then( () => {
           this.navCtrl.setRoot(EventsPage);
         });
@@ -61,7 +166,7 @@ export class EventBuilderPage {
       });
       this.loading = this.loadingCtrl.create();
       this.loading.present();
-    }
+    
   }
 
   ionViewDidLoad() {

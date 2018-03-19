@@ -52,7 +52,7 @@ export class GoogleMaps {
           script.id = "googleMaps";
  
           if(this.apiKey){
-            script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit';
+            script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit&libraries=places';
           } else {
             script.src = 'http://maps.google.com/maps/api/js?callback=mapInit';      
           }

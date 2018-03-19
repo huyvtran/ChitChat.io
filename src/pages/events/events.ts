@@ -4,13 +4,31 @@ import { AuthService } from '../../providers/auth-service/auth-service';
 import { DatabaseProvider } from './../../providers/database/database';
 import {ProfilePage} from '../profile/profile';
 import { EventBuilderPage } from '../event-builder/event-builder';
+import { LocationSelectPage} from '../location-select/location-select';
 import firebase from 'firebase';
 import { EventInfoPage } from '../event-info/event-info';
 import { AddEventPage } from '../add-event/add-event';
+import { AngularFireAuth } from 'angularfire2/auth';
+
+export class Event{
+  description
+  location
+  eventStartDate
+  eventStartTime
+  eventEndDate
+  eventEndTime
+  eventLat
+  eventLng
+
+}
+
+
+
 @Component({
   selector: 'page-events',
   templateUrl: 'events.html'
 })
+
 export class EventsPage {
   username = '';
   email = '';
@@ -19,15 +37,27 @@ export class EventsPage {
   keys = new Array();
   add=true;
   userID: any;
-  constructor(public navCtrl: NavController, private auth: AuthService, private databaseprovider: DatabaseProvider,private modal:ModalController,private toastCtrl: ToastController) {
+  today
+  date
+  constructor(public fAuth: AngularFireAuth,public navCtrl: NavController, private auth: AuthService, private databaseprovider: DatabaseProvider,private modal:ModalController,private toastCtrl: ToastController) {
     // let info = this.auth.getUserInfo();
     // this.username = info['firstname'];
     // this.email = info['email'];
     // this.userID=this.auth.getUserInfo().userID;
     // databaseprovider.setUserID(this.auth.getUserInfo().userID);
+    var t=new Date();
+    t.setHours(t.getHours()-5)
+    this.today = t.toISOString();
+    this.date=this.today.slice(0, 10)
+  
     this.getEvents();
   }
-
+  deleteEvent(anEvent, i){
+    firebase.database().ref('/events/' + this.keys[i]).remove();
+      this.events.splice(i,1);
+      this.keys.splice(i,1);
+   //   console.log(this.events[i]);
+  }
 
   ionViewDidEnter(){
     //this.getEvents();
@@ -42,11 +72,17 @@ export class EventsPage {
   public clickProfile()
   {
       this.navCtrl.push(ProfilePage, {
-       userID:this.auth.getUserInfo().userID
+       userID:this.fAuth.auth.currentUser.uid
       });
   
   }
+selectLocation(){
 
+  // this.navCtrl.push(LocationSelectPage, {
+  //   // userID:this.auth.getUserInfo().userID
+  //   });
+
+}
 clickSports(){
   this.navCtrl.push(EventsPage, {
     userID:this.auth.getUserInfo().userID,
@@ -54,7 +90,12 @@ clickSports(){
     title:"Sports"
    });
 }
-
+changeDate(){
+  this.date=new Date(this.today).toISOString().slice(0, 10);
+  this.events=new Array();
+  this.keys=new Array();
+  this.getEvents();
+}
   getEvents(){
     // this.databaseprovider.getDatabaseState().subscribe(rdy => {
     //   this.events=new Array();
@@ -69,9 +110,10 @@ clickSports(){
     //   }
 
     // })
-    firebase.database().ref('/events').on('child_added', (dataSnap) => {
+    firebase.database().ref('events/').orderByChild('eventStartTime').on('child_added', (dataSnap) => {
+      if(this.date==dataSnap.val().eventStartDate){
       this.events.push(dataSnap.val())
-      this.keys.push(dataSnap.key)
+      this.keys.push(dataSnap.key)}
     });
   }
 
@@ -85,6 +127,16 @@ clickSports(){
   //     userID:event.userID,
   //     usereventID:event.usereventID
   // });
+
+  this.navCtrl.push(EventInfoPage, {
+    title:event.eventName,
+    desc:event.description,
+    location:event.location,
+    creatorID:event.creatorID,
+    imageID:event.imageID,
+    eventID:this.keys[i]
+  })
+
   }
 
   public addEvent(event,i){

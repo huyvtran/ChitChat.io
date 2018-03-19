@@ -18,17 +18,18 @@ export class ChatPage {
   message: string = '';
   _chatSubscription;
   messages: object[] = [];
-
+  eventID
   constructor(public db: AngularFireDatabase,
     public navCtrl: NavController, public navParams: NavParams) {
       this.username = this.navParams.get('username');
-      this._chatSubscription = this.db.list('/chat').subscribe( data => {
+      this.eventID = this.navParams.get('eventID');
+      this._chatSubscription = this.db.list('events/'+this.eventID+'/chat').subscribe( data => {
         this.messages = data;
       });
     }
 
     sendMessage() {
-      this.db.list('/chat').push({
+      this.db.list('events/'+this.eventID+'/chat').push({
         username: this.username,
         message: this.message
       }).then( () => {
@@ -38,7 +39,7 @@ export class ChatPage {
     }
 
     ionViewDidLoad() {
-      this.db.list('/chat').push({
+      this.db.list('events/'+this.eventID+'/chat').push({
         specialMessage: true,
         message: `${this.username} has joined the room`
       });
@@ -46,7 +47,7 @@ export class ChatPage {
 
     ionViewWillLeave(){
       this._chatSubscription.unsubscribe();
-      this.db.list('/chat').push({
+      this.db.list('events/'+this.eventID+'/chat').push({
         specialMessage: true,
         message: `${this.username} has left the room`
       });

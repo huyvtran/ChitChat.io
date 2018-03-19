@@ -10,11 +10,11 @@
   <ion-card >
     <ion-item>
       <ion-avatar (click)="clickProfile()" item-start>
-        <img src="img/bjork-live.jpg">
+        <img src="{{profilePic}}">
       </ion-avatar>
       <h2 (click)="clickProfile()">{{firstName}} {{lastName}}</h2>
     </ion-item>
-      <img src="img/bjork-live.jpg"/>
+      <img src="{{myPhotoURL}}"/>
       <ion-item>
         <ion-icon name='heart-outline'></ion-icon>
         Likes
@@ -43,7 +43,7 @@
           Share With Friends
           
         </ion-item>
-        <button (click)="removeEvent()" ion-button small color="danger">{{button}}</button>
+        <button (click)="joinOrDeleteEvent()" ion-button small color="secondary">{{buttonTxt}}</button>
       </ion-card-content>
       
     </ion-card>

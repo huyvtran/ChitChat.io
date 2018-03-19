@@ -5,6 +5,7 @@ import { ContactPage } from '../contact/contact';
 import { HomePage } from '../home/home';
 import {MychatsPage} from '../mychats/mychats';
 import {EventsPage} from '../events/events';
+import {LocationSelectPage} from '../location-select/location-select';
 @Component({
   templateUrl: 'tabs.html'
 })

@@ -27,7 +27,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ChatPage } from '../pages/chat/chat';
 import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
-import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
+import {  GoogleMaps1} from '../providers/google-maps/google-maps';
 import { Network } from '@ionic-native/network';
 import { GoogleMapsClusterProvider } from '../providers/google-maps-cluster/google-maps-cluster';
 import { GoogleMaps} from '../providers/google-maps2/google-maps2';
@@ -35,7 +35,7 @@ import { EventCreateProvider } from '../providers/event-create/event-create';
 import { EventBuilderPage } from '../pages/event-builder/event-builder';
 import { AuthProvider } from '../providers/auth/auth';
 import { EmailProvider } from '../providers/email/email';
-
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 var config = {
   apiKey: "AIzaSyCTJT08mbl9Vpp7x2G0WSrQpjf-0sRTEbY",
@@ -101,13 +101,14 @@ var config = {
     SQLite,
     Geolocation,
     ConnectivityServiceProvider,
-    GoogleMapsProvider,
+    GoogleMaps1,
     Network,
     GoogleMapsClusterProvider,
     GoogleMaps,
     EventCreateProvider,
     AuthProvider,
-    EmailProvider
+    EmailProvider,
+    Camera
   ]
 })
 export class AppModule {}

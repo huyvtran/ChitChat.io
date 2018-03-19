@@ -6,7 +6,7 @@ import { AuthService } from './../../providers/auth-service/auth-service';
 import { ToastController } from 'ionic-angular';
 import { LocationSelectPage } from '../location-select/location-select';
 import { AngularFireDatabase} from "angularfire2/database-deprecated";
-import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
+import { GoogleMaps1 } from '../../providers/google-maps/google-maps';
 //import {HomePage} from '../home/home';
 /**
  * Generated class for the AddEventPage page.
@@ -37,7 +37,7 @@ export class AddEventPage {
   chart:any;
   pub
   add=true;
-  constructor(public db: AngularFireDatabase,public maps: GoogleMapsProvider,public navCtrl: NavController, public navParams: NavParams, public viewController:ViewController,private databaseprovider: DatabaseProvider, private toastCtrl: ToastController, public modalCtrl: ModalController) {
+  constructor(public db: AngularFireDatabase,public maps: GoogleMaps1,public navCtrl: NavController, public navParams: NavParams, public viewController:ViewController,private databaseprovider: DatabaseProvider, private toastCtrl: ToastController, public modalCtrl: ModalController) {
         this.startDate=new Date().toISOString();
         this.endDate=new Date().toISOString();
         var m=new Date(this.startDate);
