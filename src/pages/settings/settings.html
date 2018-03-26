@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Settings
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  
+
+    <ion-item>
+      <ion-label>Notifications Enabled</ion-label>
+      <ion-toggle [(ngModel)]="nEnable" disabled="false" (ionChange)="toggleNotifications()"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Time before notified</ion-label>
+      <ion-select [(ngModel)]="timeToNotify" interface="popover">
+        <ion-option value="fifteen">15min</ion-option>
+        <ion-option value="thrity">30min</ion-option>
+        <ion-option value="hour">1hr</ion-option>
+      </ion-select>
+    </ion-item>
+  
+</ion-content>
+
+<ion-footer>
+  <button ion-button color="danger" full (click)="logOut()">Log Out</button>
+</ion-footer>

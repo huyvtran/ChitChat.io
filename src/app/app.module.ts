@@ -36,7 +36,8 @@ import { EventBuilderPage } from '../pages/event-builder/event-builder';
 import { AuthProvider } from '../providers/auth/auth';
 import { EmailProvider } from '../providers/email/email';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-
+import { NativeStorage } from '@ionic-native/native-storage';
+import { SettingsPage } from '../pages/settings/settings';
 var config = {
   apiKey: "AIzaSyCTJT08mbl9Vpp7x2G0WSrQpjf-0sRTEbY",
   authDomain: "chat-c50e8.firebaseapp.com",
@@ -62,7 +63,8 @@ var config = {
     ChatPage,
     LocationSelectPage,
     AddEventPage,
-    EventBuilderPage
+    EventBuilderPage,
+    SettingsPage
     
   ],
   imports: [
@@ -88,7 +90,8 @@ var config = {
     ChatPage,
     LocationSelectPage,
     AddEventPage,
-    EventBuilderPage
+    EventBuilderPage,
+    SettingsPage
     
   ],
   providers: [
@@ -108,7 +111,8 @@ var config = {
     EventCreateProvider,
     AuthProvider,
     EmailProvider,
-    Camera
+    Camera,
+    NativeStorage
   ]
 })
 export class AppModule {}

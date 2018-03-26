@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { DatabaseProvider } from './../../providers/database/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
 import { AngularFireDatabase} from "angularfire2/database-deprecated";
 import { Camera } from '@ionic-native/camera';
+import { SettingsPage } from '../settings/settings';
 /**
  * Generated class for the ProfilePage page.
  *
@@ -28,15 +29,18 @@ export class ProfilePage {
   name
   imageID
   userKey
+  eventsInvolved
   isCurrentUser
   followers=new Array()
   peopleYouFollow=new Array()
   public myPhotosRef: any;
    public myPhoto: any;
    public myPhotoURL: string;
-  constructor(public db: AngularFireDatabase,public fAuth: AngularFireAuth,public navCtrl: NavController, public navParams: NavParams, private databaseprovider: DatabaseProvider,
+  constructor(public db: AngularFireDatabase,public fAuth: AngularFireAuth, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private databaseprovider: DatabaseProvider,
     private camera: Camera,private modal:ModalController) {
    this.userID=navParams.get('userID');
+
+   this.eventsInvolved = 0;
     //this.you = this.databaseprovider.userID;
       
     if(this.userID==this.fAuth.auth.currentUser.uid){
@@ -55,6 +59,8 @@ export class ProfilePage {
       this.myPhotoURL=dataSnap.val().photo;
       this.userKey=dataSnap.key
     });
+
+    
    //this.getUser();
   // this.databaseprovider.findFriendshipStatus(this.databaseprovider.userID,this.userID).then(data => {
     //this.button = data;
@@ -62,10 +68,35 @@ export class ProfilePage {
     
   //})
   this.myPhotosRef = firebase.storage().ref('/Photos/');
+
+  
+  
+  }
+
+  showEvents(){
+  
+    firebase.database().ref('userProfiles/'+this.userKey+'/events').once("value", function(snapshot){
+      console.log(snapshot.numChildren());
+      //this.eventsInvolved = snapshot.numChildren();
+    }, function (errorObject) {
+      console.log("ERRORR" + errorObject.code);
+    });
+  
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
+
+    firebase.database().ref('userProfiles/'+this.userKey+'/events').once("value", function(snapshot){
+      console.log(snapshot.numChildren());
+      //this.eventsInvolved = snapshot.numChildren();
+    }, function (errorObject) {
+      console.log("ERRORR" + errorObject.code);
+    });
+
+
+    
+    this.showEvents();
 
   }
   public closeModal(){
@@ -108,6 +139,11 @@ getPeopleYouFollow(){
 
 
 }
+
+
+
+
+
 addOrEdit(){
   if(this.button=="Follow"){
     firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(this.fAuth.auth.currentUser.uid).once('child_added', (dataSnap) => {
@@ -128,8 +164,36 @@ addOrEdit(){
     });
     this.button="Following"
   }else if(this.button=="Edit Profile"){
+    let changeName = this.alertCtrl.create({
+      title: 'Edit',
+      message: "Enter your name and press save or cancel.",
+      inputs: [{
+          name: 'name',
+          placeholder: 'Name'
+        },],
+      buttons: [{
+          text: 'Save',
+          handler: data => {
+            var nameChange = data.name.split(/(\s+)/);
+            var first = nameChange[0];
+            var last = nameChange[2];
 
+            firebase.database().ref('userProfiles/'+this.userKey).update({first: first, last: last});
+            this.firstName=first;
+            this.lastName=last;
+          }
+        },
+        {
+          text: 'Cancel',
+          handler: data=> {
+            //do nothing?
+          }
+        }]
+    });
+    changeName.present();
   }
+
+  
 }
 
 setPhoto(){
@@ -171,11 +235,23 @@ selectPhoto(): void {
   });
 }
 }
+
+goToSettings(){
+  this.navCtrl.push(SettingsPage,{});
+}
 ionViewWillLoad(){
 
 //this.name=this.fAuth.auth.currentUser.displayName;
 }
-ionViewWillEnter(){}
+ionViewWillEnter(){
+
+  firebase.database().ref('userProfiles/'+this.userKey+'/events').once("value", function(snapshot){
+    console.log(snapshot.numChildren());
+    //this.eventsInvolved = snapshot.numChildren();
+  }, function (errorObject) {
+    console.log("ERRORR" + errorObject.code);
+  });
+}
 // requestFriend(){
 //   if(this.button=="Friends"){
 //     //allow user to remove friendship
@@ -217,3 +293,4 @@ getUser(){
 
 }
 }
+

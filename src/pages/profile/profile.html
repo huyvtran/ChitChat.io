@@ -1,8 +1,14 @@
-
 <ion-header>
 
   <ion-navbar>
-    <ion-title>profile</ion-title>
+    
+
+    <table class="icon-table">
+
+    <td><ion-icon end class="custom-icon" name="md-cog" (click)="goToSettings()"></ion-icon></td>
+
+    </table>
+    <ion-title>Profile</ion-title>
     
   </ion-navbar>
 
@@ -17,8 +23,12 @@
             
              <h2 id="name-text">{{firstName}} {{lastName}}</h2>
              <button ion-button  (click)="addOrEdit()">{{button}}</button>
+             <h3 id = "numEventsCreated">Involved In {{ eventsInvolved }} Events</h3>
+             
              <button ion-button (click)="openFollowers()"  block clear >Followers {{followers.length}}</button>
              <button ion-button (click)="openFollowing()"  block clear >Following {{peopleYouFollow.length}}</button>
+             <button ion-button (click)="showEvents()"  block clear >Events</button>
+             
              </div>
              
            
@@ -27,5 +37,3 @@
 
 
 </ion-content>
-
-
