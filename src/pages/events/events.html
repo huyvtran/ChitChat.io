@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-navbar>
+    <table class="icon-table">
+      <td><ion-icon id="notification-button" class="custom-icon" name="md-notifications" >
+         <ion-badge id="notifications-badge" color="danger">0</ion-badge>
+      </ion-icon></td>
+      <td><ion-icon class="custom-icon" name="md-contact" (click)="clickProfile()"></ion-icon></td>
+    </table> 
+    <ion-title>Events</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+  <div ion-fixed id="dateheader">
+    <table id="datetable"style="text-align:center" >
+        <tr>
+         
+          
+          <td><ion-datetime  (ionChange)="changeDate()" displayFormat="MMMM DD, YYYY" [(ngModel)]="today" [max]="max" [min]="2015" ></ion-datetime></td>
+          
+          <td><ion-icon name="md-calendar"></ion-icon></td>
+        </tr>
+      </table>
+ </div>
+ <div class="main-content">
+        <ion-card  *ngFor="let event of events; let i= index"  >
+           
+            <ion-item (click)="clickEvent(event, i)"> 
+             
+              
+              <h1>{{event.eventName}}</h1>
+              
+              
+              
+              
+            </ion-item>
+    
+            <img (click)="clickEvent(event, i)" src="{{event.imageID}}" />
+            <ion-card-content (click)="clickEvent(event, i)">
+             
+                <!-- <p >
+                  {{time[i].start}}-{{time[i].end}}
+                </p> -->
+          
+                <p>
+                 {{event.description}}
+                </p>
+                <ion-item>
+                    <ion-icon name='md-pin' ></ion-icon>
+                    {{event.location}}
+                    </ion-item>
+              
+          
+              </ion-card-content>
+              <button  (click)="addEvent(event,i)" color="secondary" ion-button round outline item-end icon-left>
+                  <ion-icon name="add"></ion-icon>
+                  Join
+                </button>
+
+                <button  (click)="deleteEvent(event, i)" color="danger" ion-button round outline item-end icon-left>
+                    <ion-icon name="close"></ion-icon>
+                     Delete
+                  </button>
+          </ion-card>
+        </div>
+  
+  <ion-fab (click)="clickAddEvent()">
+    <button ion-fab><ion-icon class="custom-icon" name="add" ></ion-icon></button>
+  </ion-fab>
+  
+
+</ion-content>

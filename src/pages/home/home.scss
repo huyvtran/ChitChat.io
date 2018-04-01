@@ -1,0 +1,121 @@
+
+html *
+{
+   
+   //color: #05E9FF !important;
+   
+}
+
+.ios, .md {
+    .scroll {
+        height: 100%
+      }
+    #map {
+        width: 100%;
+        height: 100%;
+      }
+    ion-fab{
+        margin-top: 425px;
+        padding-left: 5px;
+        position: absolute;
+    }
+    #notification-button {            
+        position: relative;
+        width: 42px;
+        top:1px;
+        right: 1px;
+        overflow: visible!important;
+    }
+
+
+#notifications-badge {
+        background-color: red;
+        position: absolute;
+        top: -3px;
+        right: -3px;
+        border-radius: 100%;
+    }
+
+   .custom-icon {
+       
+  font-size: 35px;
+}
+
+
+.icon-table{
+    float: right;
+    
+            td
+{
+    padding:0 15px 0 15px;
+}
+}
+    
+        .scroll-content {
+            background-color: map-get($colors, light);
+        }
+        .home_header{
+            button{
+                background: black;
+            }
+        }
+
+    .my-page {
+
+        td
+{
+    padding:0 0 0 0px;
+}
+    
+   table
+   {
+       
+
+       margin: auto;
+   }
+   canvas{
+  
+       position: absolute;
+   }
+ 
+}
+    
+ 
+}
+
+
+.bg{
+         
+        
+    background-size: cover;
+  
+   background-position: center center;
+}
+
+.card-background-page {
+
+    ion-card {
+        background: #FF5733;
+    height: 125px;
+      position: relative;
+      text-align: center;
+    }
+  
+    .card-title {
+      position: absolute;
+      top: 36%;
+      font-size: 2.0em;
+      width: 100%;
+      font-weight: bold;
+      color: #fff;
+    }
+  
+    .card-subtitle {
+      font-size: 1.0em;
+      position: absolute;
+      top: 60%;
+      width: 100%;
+      color: #fff;
+    }
+  
+  }

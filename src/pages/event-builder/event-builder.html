@@ -1,0 +1,67 @@
+<!--
+  Generated template for the EventbuilderPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Create an Event</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  
+  <ion-item>
+    <ion-row>
+      <ion-col width-50>
+        <button ion-button color="danger" type="button" full round large (click)="takePhoto()">
+                    <ion-icon name="md-camera"></ion-icon>
+                </button>
+      </ion-col>
+      <ion-col width-50>
+        <button ion-button color="secondary" type="button" full round large (click)="selectPhoto()">
+                    <ion-icon name="md-image"></ion-icon>
+                </button>
+      </ion-col>
+    </ion-row>
+  </ion-item>
+  <ion-item>
+    <img class="img-responsive" src="{{ myPhotoURL }}" />
+  </ion-item>
+      <ion-item>
+          <ion-label color="primary">Title</ion-label>
+          <ion-input [(ngModel)]="title" placeholder="Title"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary">Description</ion-label>
+          <ion-input [(ngModel)]="desc" placeholder="Description"></ion-input>
+        </ion-item>
+        <ion-item (click)="selectLocation()">
+          <ion-label color="primary">Location</ion-label>
+          <ion-input [(ngModel)]="location" placeholder="Location"></ion-input>
+        </ion-item>
+    <ion-item>
+      <ion-label stacked>Event Start Date</ion-label>
+      <ion-input (ionChange)="changeStartDate()" [(ngModel)]="startDate" type="date" placeholder="xx/xx/xxxx" required="required"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Event Start Time</ion-label>
+      <ion-input (ionChange)="changeStartTime()"  [(ngModel)]="startTime" type="time" required="required"></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label stacked>Event End Date</ion-label>
+        <ion-input [(ngModel)]="endDate" type="date" placeholder="xx/xx/xxxx" required="required"></ion-input>
+      </ion-item>
+
+    <ion-item>
+        <ion-label stacked>Event End Time</ion-label>
+        <ion-input [(ngModel)]="endTime" type="time" required="required"></ion-input>
+      </ion-item>
+
+      <button ion-button full #btn (click)="createEvent()">Add</button>
+</ion-content>

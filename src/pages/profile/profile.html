@@ -1,0 +1,31 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>profile</ion-title>
+    
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content >
+
+   
+          <div class="header-image">
+              <ion-img id="profilePic"(click)="selectPhoto()" width="150" height="150" src={{myPhotoURL}}></ion-img>
+            
+             <h2 id="name-text">{{firstName}} {{lastName}}</h2>
+             <button ion-button  (click)="addOrEdit()">{{button}}</button>
+             <button ion-button (click)="openFollowers()"  block clear >Followers {{followers.length}}</button>
+             <button ion-button (click)="openFollowing()"  block clear >Following {{peopleYouFollow.length}}</button>
+             </div>
+             
+           
+    
+
+
+
+</ion-content>
+
+
