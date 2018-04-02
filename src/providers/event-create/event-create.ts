@@ -14,7 +14,7 @@ userKey
   
   }
 
-   createEvent(imageID,userID,eventName: string, description: Text, location: Location, eventStartDate: Date, eventStartTime: Time, eventEndDate: Date, eventEndTime: Time, eventLat, eventLng): Promise<any> {
+   createEvent(imageID,userID,eventName: string, description: Text, location: Location, eventStartDate: Date, eventStartTime: Time, eventEndDate: Date, eventEndTime: Time, eventLat, eventLng,pub): Promise<any> {
     
      return Promise.resolve(
 
@@ -29,7 +29,8 @@ userKey
           eventLat:eventLat,
           eventLng:eventLng,
           creatorID:userID,
-          imageID:imageID
+          imageID:imageID,
+          public:pub
         
         
         })).then((evnt)=>{

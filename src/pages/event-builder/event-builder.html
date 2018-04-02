@@ -62,6 +62,12 @@
         <ion-label stacked>Event End Time</ion-label>
         <ion-input [(ngModel)]="endTime" type="time" required="required"></ion-input>
       </ion-item>
-
+      <ion-item>
+        <ion-label>Public</ion-label>
+        <ion-select [(ngModel)]="pub">
+          <ion-option value="yes">Yes</ion-option>
+          <ion-option value="no">No</ion-option>
+        </ion-select>
+      </ion-item>
       <button ion-button full #btn (click)="createEvent()">Add</button>
 </ion-content>

@@ -9,6 +9,7 @@ import firebase from 'firebase';
 import { EventInfoPage } from '../event-info/event-info';
 import { AddEventPage } from '../add-event/add-event';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { FirebaseListObservable, AngularFireDatabase } from 'angularfire2/database-deprecated';
 
 export class Event{
   description
@@ -30,16 +31,20 @@ export class Event{
 })
 
 export class EventsPage {
+  userKey: string;
   username = '';
   email = '';
   events=new Array();
   allevents = new Array();
   keys = new Array();
+  peopleYouFollow: FirebaseListObservable<any[]>;
+  pplYouFollow=new Array()
   add=true;
   userID: any;
   today
   date
-  constructor(public fAuth: AngularFireAuth,public navCtrl: NavController, private auth: AuthService, private databaseprovider: DatabaseProvider,private modal:ModalController,private toastCtrl: ToastController) {
+  fire: FirebaseListObservable<any[]>
+  constructor(public db: AngularFireDatabase,public fAuth: AngularFireAuth,public navCtrl: NavController, private auth: AuthService, private databaseprovider: DatabaseProvider,private modal:ModalController,private toastCtrl: ToastController) {
     // let info = this.auth.getUserInfo();
     // this.username = info['firstname'];
     // this.email = info['email'];
@@ -49,14 +54,39 @@ export class EventsPage {
     t.setHours(t.getHours()-5)
     this.today = t.toISOString();
     this.date=this.today.slice(0, 10)
-  
-    this.getEvents();
+    this.getPeopleYouFollow()
+    //this.getEvents();
   }
   deleteEvent(anEvent, i){
     firebase.database().ref('/events/' + this.keys[i]).remove();
       this.events.splice(i,1);
       this.keys.splice(i,1);
    //   console.log(this.events[i]);
+  }
+ 
+   getPeopleYouFollow():any{
+     this.pplYouFollow=new Array()
+    firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(this.fAuth.auth.currentUser.uid).once('child_added', (dataSnap) => {
+      
+      this.userKey=dataSnap.key
+      this.peopleYouFollow=  this.db.list('userProfiles/'+this.userKey+'/following')
+           this.peopleYouFollow.subscribe(users=>{
+             users.forEach(item=>{
+               this.pplYouFollow.push(item.userID)
+  
+              })
+              
+              this.getEvents()
+           });
+           
+      
+      })
+    
+   
+ 
+    
+  
+  
   }
 
   ionViewDidEnter(){
@@ -94,9 +124,9 @@ changeDate(){
   this.date=new Date(this.today).toISOString().slice(0, 10);
   this.events=new Array();
   this.keys=new Array();
-  this.getEvents();
+  this.getPeopleYouFollow();
 }
-  getEvents(){
+  async getEvents(){
     // this.databaseprovider.getDatabaseState().subscribe(rdy => {
     //   this.events=new Array();
     //   if (rdy) {
@@ -110,11 +140,31 @@ changeDate(){
     //   }
 
     // })
+    
+   
+      
+    var add=false;
     firebase.database().ref('events/').orderByChild('eventStartTime').on('child_added', (dataSnap) => {
       if(this.date==dataSnap.val().eventStartDate){
-      this.events.push(dataSnap.val())
-      this.keys.push(dataSnap.key)}
+        for(var i=0;i<this.pplYouFollow.length;i++){
+          
+          if(this.pplYouFollow[i]==dataSnap.val().creatorID){
+            this.events.push(dataSnap.val())
+            this.keys.push(dataSnap.key)
+            add=true;
+          }
+        }if(add==false && dataSnap.val().public=="yes"){
+          this.events.push(dataSnap.val())
+          this.keys.push(dataSnap.key)
+          add=true
+        }else if(dataSnap.val().creatorID==this.fAuth.auth.currentUser.uid && add==false){
+          this.events.push(dataSnap.val())
+          this.keys.push(dataSnap.key)
+          add=true
+        }
+  }
     });
+ 
   }
 
   clickEvent(event, i){
