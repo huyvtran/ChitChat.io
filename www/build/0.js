@@ -42,6 +42,7 @@ var SignupPageModule = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export User */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
@@ -51,6 +52,7 @@ var SignupPageModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase_app__ = __webpack_require__(213);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase_app___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_firebase_app__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angularfire2_database_deprecated__ = __webpack_require__(38);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -67,8 +69,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+var User = (function () {
+    function User(userID, name, lastname, email) {
+        this.firstname = name;
+        this.email = email;
+        this.lastname = lastname;
+        this.userID = userID;
+    }
+    return User;
+}());
+
 var LoginPage = (function () {
-    function LoginPage(nav, auth, alertCtrl, loadingCtrl, afAuth, toastCtrl, facebook, platform) {
+    function LoginPage(nav, auth, alertCtrl, loadingCtrl, afAuth, toastCtrl, facebook, platform, db) {
         this.nav = nav;
         this.auth = auth;
         this.alertCtrl = alertCtrl;
@@ -77,6 +90,7 @@ var LoginPage = (function () {
         this.toastCtrl = toastCtrl;
         this.facebook = facebook;
         this.platform = platform;
+        this.db = db;
         this.registerCredentials = { email: '', password: '' };
         this.isLoggedIn = false;
     }
@@ -92,9 +106,35 @@ var LoginPage = (function () {
         return this.afAuth.auth
             .signInWithPopup(new __WEBPACK_IMPORTED_MODULE_5_firebase_app__["auth"].FacebookAuthProvider())
             .then(function (res) {
-            console.log(res);
-            _this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_3__pages_tabs_tabs__["a" /* TabsPage */]);
+            // console.log(res);
+            //console.log(res.additionalUserInfo.profile.first_name.toString());
+            if (res.additionalUserInfo.isNewUser == true) {
+                _this.db.list('/userProfiles').push({
+                    userID: res.additionalUserInfo.profile.id,
+                    first: res.additionalUserInfo.profile.first_name,
+                    last: res.additionalUserInfo.profile.last_name,
+                    email: res.additionalUserInfo.profile.email
+                });
+                _this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_3__pages_tabs_tabs__["a" /* TabsPage */]);
+            }
+            else {
+                var userLogin = new User(0, "", "", "");
+                var fbdata = res;
+                userLogin.firstname = fbdata.additionalUserInfo.profile.first_name.toString();
+                userLogin.lastname = fbdata.additionalUserInfo.profile.last_name.toString();
+                userLogin.userID = fbdata.additionalUserInfo.profile.id;
+                userLogin.email = fbdata.additionalUserInfo.profile.email.toString();
+                _this.auth.fbLogin(userLogin);
+                //this.nav.setRoot(TabsPage);
+                console.log("--------");
+                console.log(userLogin);
+            }
         });
+        //     this.facebook.login(['email', 'public_profile']).then((response: FacebookLoginResponse) => {
+        //   this.facebook.api('me?fields=id,name,email,first_name,picture.width(720).height(720).as(picture_large)', []).then(profile => {
+        //     this.userData = {email: profile['email'], first_name: profile['first_name'], picture: profile['picture_large']['data']['url'], username: profile['name']}
+        //   });
+        // });
         // }
     };
     LoginPage.prototype.createAccount = function () {
@@ -140,7 +180,8 @@ var LoginPage = (function () {
             __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__["a" /* AngularFireAuth */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */],
             __WEBPACK_IMPORTED_MODULE_4__ionic_native_facebook__["a" /* Facebook */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */]])
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_7_angularfire2_database_deprecated__["a" /* AngularFireDatabase */]])
     ], LoginPage);
     return LoginPage;
 }());
