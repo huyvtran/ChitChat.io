@@ -113,6 +113,20 @@ module.exports = [
         "clobbers": [
             "facebookConnectPlugin"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+        "id": "cordova-plugin-statusbar.statusbar",
+        "pluginId": "cordova-plugin-statusbar",
+        "clobbers": [
+            "window.StatusBar"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-statusbar/src/browser/StatusBarProxy.js",
+        "id": "cordova-plugin-statusbar.StatusBarProxy",
+        "pluginId": "cordova-plugin-statusbar",
+        "runs": true
     }
 ];
 module.exports.metadata = 
@@ -128,7 +142,8 @@ module.exports.metadata =
     "cordova-sqlite-storage": "2.2.0",
     "ionic-plugin-keyboard": "2.2.1",
     "uk.co.workingedge.cordova.plugin.sqliteporter": "1.0.2",
-    "cordova-plugin-facebook4": "1.9.1"
+    "cordova-plugin-facebook4": "1.9.1",
+    "cordova-plugin-statusbar": "2.4.1"
 }
 // BOTTOM OF METADATA
 });

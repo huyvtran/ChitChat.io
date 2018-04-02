@@ -93,4 +93,5 @@
         <variable name="APP_ID" value="211210129431769" />
         <variable name="APP_NAME" value="“coms309-app”" />
     </plugin>
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
 </widget>

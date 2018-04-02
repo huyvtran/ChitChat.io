@@ -67,6 +67,10 @@
             {
               "xml": "<preference name=\"android-minSdkVersion\" value=\"15\" />",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
             }
           ]
         }
@@ -165,6 +169,9 @@
     "cordova-plugin-facebook4": {
       "APP_ID": "211210129431769",
       "APP_NAME": "“coms309-app”",
+      "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-statusbar": {
       "PACKAGE_NAME": "io.ionic.starter"
     }
   },
@@ -281,6 +288,14 @@
       "clobbers": [
         "facebookConnectPlugin"
       ]
+    },
+    {
+      "id": "cordova-plugin-statusbar.statusbar",
+      "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+      "pluginId": "cordova-plugin-statusbar",
+      "clobbers": [
+        "window.StatusBar"
+      ]
     }
   ],
   "plugin_metadata": {
@@ -294,6 +309,7 @@
     "cordova-plugin-geolocation": "4.0.1",
     "cordova-plugin-network-information": "2.0.1",
     "cordova-plugin-camera": "4.0.2",
-    "cordova-plugin-facebook4": "1.9.1"
+    "cordova-plugin-facebook4": "1.9.1",
+    "cordova-plugin-statusbar": "2.4.1"
   }
 }

@@ -41,6 +41,9 @@
       "APP_ID": "211210129431769",
       "APP_NAME": "“coms309-app”",
       "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "io.ionic.starter"
     }
   },
   "dependent_plugins": {}
