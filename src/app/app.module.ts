@@ -39,24 +39,24 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Facebook } from '@ionic-native/facebook';
 
 // Michael's Database
-// var config = {
-//   apiKey: "AIzaSyCTJT08mbl9Vpp7x2G0WSrQpjf-0sRTEbY",
-//   authDomain: "chat-c50e8.firebaseapp.com",
-//   databaseURL: "https://chat-c50e8.firebaseio.com",
-//   projectId: "chat-c50e8",
-//   storageBucket: "chat-c50e8.appspot.com",
-//   messagingSenderId: "101050978336"
-// };
+var config = {
+  apiKey: "AIzaSyCTJT08mbl9Vpp7x2G0WSrQpjf-0sRTEbY",
+  authDomain: "chat-c50e8.firebaseapp.com",
+  databaseURL: "https://chat-c50e8.firebaseio.com",
+  projectId: "chat-c50e8",
+  storageBucket: "chat-c50e8.appspot.com",
+  messagingSenderId: "101050978336"
+};
 
 // Liam's Database
-    const config = {
-      apiKey: "AIzaSyCNATg5Q8TZqnxW3PhaqdMNfan9zobQMTs",
-      authDomain: "coms-309.firebaseapp.com",
-      databaseURL: "https://coms-309.firebaseio.com",
-      projectId: "coms-309",
-      storageBucket: "coms-309.appspot.com",
-      messagingSenderId: "769505137443"
-    };
+    // const config = {
+    //   apiKey: "AIzaSyCNATg5Q8TZqnxW3PhaqdMNfan9zobQMTs",
+    //   authDomain: "coms-309.firebaseapp.com",
+    //   databaseURL: "https://coms-309.firebaseio.com",
+    //   projectId: "coms-309",
+    //   storageBucket: "coms-309.appspot.com",
+    //   messagingSenderId: "769505137443"
+    // };
 
 
 @NgModule({
