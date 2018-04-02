@@ -105,6 +105,14 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.sqlitePorter"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-facebook4/www/facebook-browser.js",
+        "id": "cordova-plugin-facebook4.FacebookConnectPluginBrowser",
+        "pluginId": "cordova-plugin-facebook4",
+        "clobbers": [
+            "facebookConnectPlugin"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -119,7 +127,8 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.3.1",
     "cordova-sqlite-storage": "2.2.0",
     "ionic-plugin-keyboard": "2.2.1",
-    "uk.co.workingedge.cordova.plugin.sqliteporter": "1.0.2"
+    "uk.co.workingedge.cordova.plugin.sqliteporter": "1.0.2",
+    "cordova-plugin-facebook4": "1.9.1"
 }
 // BOTTOM OF METADATA
 });

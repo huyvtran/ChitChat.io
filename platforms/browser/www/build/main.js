@@ -252,10 +252,10 @@ var GoogleMaps1 = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_service_auth_service__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_database_database__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__profile_profile__ = __webpack_require__(126);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__event_builder_event_builder__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__event_builder_event_builder__ = __webpack_require__(211);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__event_info_event_info__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__event_info_event_info__ = __webpack_require__(212);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angularfire2_auth__ = __webpack_require__(51);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -834,179 +834,6 @@ var ConnectivityServiceProvider = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EventInfoPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_database_database__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__profile_profile__ = __webpack_require__(126);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_database_deprecated__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__events_events__ = __webpack_require__(121);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-/**
- * Generated class for the EventInfoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var EventInfoPage = (function () {
-    function EventInfoPage(fAuth, navCtrl, navParams, databaseprovider, toastCtrl, modal, db) {
-        var _this = this;
-        this.fAuth = fAuth;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.databaseprovider = databaseprovider;
-        this.toastCtrl = toastCtrl;
-        this.modal = modal;
-        this.db = db;
-        this.user = new Array();
-        this.attendees = new Array();
-        this.keys = new Array();
-        this.title = navParams.get('title');
-        // this.start=navParams.get('start');
-        // this.end=navParams.get('end');
-        this.eventKey = navParams.get('eventID');
-        this.creatorID = navParams.get('creatorID');
-        this.desc = navParams.get('desc');
-        this.imageID = navParams.get('imageID');
-        this.location = navParams.get('location');
-        this.myPhotoURL = navParams.get('imageID');
-        __WEBPACK_IMPORTED_MODULE_4_firebase___default.a.database().ref('userProfiles/').orderByChild('userID').equalTo(this.creatorID).once('child_added', function (dataSnap) {
-            _this.firstName = dataSnap.val().first;
-            _this.lastName = dataSnap.val().last;
-            _this.profilePic = dataSnap.val().photo;
-        });
-        if (this.creatorID == this.fAuth.auth.currentUser.uid) {
-            this.buttonTxt = "Delete";
-        }
-        else {
-            this.buttonTxt = "Join";
-        }
-        this.getPeopleAttending();
-        // this.eventID=navParams.get('eventID');
-        // this.button=navParams.get('button');
-        // this.userID=navParams.get('userID');
-        // this.usereventID=navParams.get('usereventID');
-        // alert(this.userID);
-        // this.getUser();
-        // this.getPeopleAttending();
-    }
-    EventInfoPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad ChartPopupPage');
-    };
-    EventInfoPage.prototype.closeModal = function () {
-    };
-    EventInfoPage.prototype.viewAttendees = function () {
-        var myModal = this.modal.create('PeopleAttendingPage', { attendees: this.attendees });
-        myModal.present();
-    };
-    EventInfoPage.prototype.removeEvent = function () {
-        if (this.userID == this.databaseprovider.userID) {
-            alert("Event was deleted");
-            this.databaseprovider.removeEvent(this.eventID);
-        }
-        this.databaseprovider.removeUserFromEvent(this.usereventID);
-        var toast = this.toastCtrl.create({
-            message: 'Event was removed successfully',
-            duration: 3000,
-            position: 'bottom'
-        });
-        toast.present();
-    };
-    EventInfoPage.prototype.getPeopleAttending = function () {
-        var _this = this;
-        this.attendees = new Array();
-        this.keys = new Array();
-        __WEBPACK_IMPORTED_MODULE_4_firebase___default.a.database().ref('events/' + this.eventKey + '/users').on('child_added', function (dataSnap) {
-            _this.attendees.push(dataSnap.val());
-            _this.keys.push(dataSnap.key);
-        });
-    };
-    EventInfoPage.prototype.joinOrDeleteEvent = function () {
-        var _this = this;
-        if (this.buttonTxt == "Delete") {
-            __WEBPACK_IMPORTED_MODULE_4_firebase___default.a.database().ref('/events/' + this.eventKey).remove();
-            var toast = this.toastCtrl.create({
-                message: 'Event was removed successfully',
-                duration: 3000,
-                position: 'bottom'
-            });
-            toast.present();
-            this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__events_events__["a" /* EventsPage */]);
-        }
-        else if (this.buttonTxt == "Join") {
-            __WEBPACK_IMPORTED_MODULE_4_firebase___default.a.database().ref('/events/' + this.eventKey + '/users').push({
-                userID: this.fAuth.auth.currentUser.uid
-            });
-            __WEBPACK_IMPORTED_MODULE_4_firebase___default.a.database().ref('userProfiles/').orderByChild('userID').equalTo(this.fAuth.auth.currentUser.uid).once('child_added', function (dataSnap) {
-                _this.userKey = dataSnap.key;
-                _this.db.list('userProfiles/' + _this.userKey + '/events').push({
-                    evnt: _this.eventKey
-                });
-            });
-            var toast = this.toastCtrl.create({
-                message: 'You joined this event successfully',
-                duration: 3000,
-                position: 'bottom'
-            });
-            toast.present();
-        }
-    };
-    EventInfoPage.prototype.getUser = function () {
-        var _this = this;
-        this.databaseprovider.getDatabaseState().subscribe(function (rdy) {
-            _this.user = new Array();
-            if (rdy) {
-                _this.databaseprovider.getUser(_this.userID).then(function (data) {
-                    _this.user = data;
-                    for (var i = 0; i < _this.user.length; i++) {
-                        _this.firstName = _this.user[i].firstName;
-                        _this.lastName = _this.user[i].lastName;
-                    }
-                });
-            }
-        });
-    };
-    EventInfoPage.prototype.clickProfile = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__profile_profile__["a" /* ProfilePage */], {
-            userID: this.userID
-        });
-    };
-    EventInfoPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-event-info',template:/*ion-inline-start:"/Users/liamjameson/Desktop/YT_3/src/pages/event-info/event-info.html"*/'\n<ion-header >\n  \n  <ion-title>{{title}}</ion-title>\n\n</ion-header>\n\n<ion-content >\n\n  <ion-card >\n    <ion-item>\n      <ion-avatar (click)="clickProfile()" item-start>\n        <img src="{{profilePic}}">\n      </ion-avatar>\n      <h2 (click)="clickProfile()">{{firstName}} {{lastName}}</h2>\n    </ion-item>\n      <img src="{{myPhotoURL}}"/>\n      <ion-item>\n        <ion-icon name=\'heart-outline\'></ion-icon>\n        Likes\n        <ion-badge item-end>9</ion-badge>\n      </ion-item>\n      <ion-card-content>\n     \n        <p>\n         <!-- {{start}}-{{end}} -->\n        </p>\n  \n        <p>\n         {{desc}}\n        </p>\n        <ion-item>\n            <ion-icon name=\'md-pin\' ></ion-icon>\n            {{location}}\n            </ion-item>\n            <ion-item (click)="viewAttendees()">\n          <ion-icon name=\'md-people\'></ion-icon>\n          People Attending\n          <ion-badge item-end>{{attendees.length}}</ion-badge>\n        </ion-item>\n        <ion-item>\n          <ion-icon name=\'md-paper-plane\'></ion-icon>\n          Share With Friends\n          \n        </ion-item>\n        <button (click)="joinOrDeleteEvent()" ion-button small color="secondary">{{buttonTxt}}</button>\n      </ion-card-content>\n      \n    </ion-card>\n\n\n</ion-content>'/*ion-inline-end:"/Users/liamjameson/Desktop/YT_3/src/pages/event-info/event-info.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__["a" /* AngularFireAuth */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_database_database__["a" /* DatabaseProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */], __WEBPACK_IMPORTED_MODULE_5_angularfire2_database_deprecated__["a" /* AngularFireDatabase */]])
-    ], EventInfoPage);
-    return EventInfoPage;
-}());
-
-//# sourceMappingURL=event-info.js.map
-
-/***/ }),
-
-/***/ 212:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EventBuilderPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
@@ -1186,6 +1013,179 @@ var EventBuilderPage = (function () {
 
 /***/ }),
 
+/***/ 212:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EventInfoPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_database_database__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__profile_profile__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_database_deprecated__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__events_events__ = __webpack_require__(121);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+/**
+ * Generated class for the EventInfoPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var EventInfoPage = (function () {
+    function EventInfoPage(fAuth, navCtrl, navParams, databaseprovider, toastCtrl, modal, db) {
+        var _this = this;
+        this.fAuth = fAuth;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.databaseprovider = databaseprovider;
+        this.toastCtrl = toastCtrl;
+        this.modal = modal;
+        this.db = db;
+        this.user = new Array();
+        this.attendees = new Array();
+        this.keys = new Array();
+        this.title = navParams.get('title');
+        // this.start=navParams.get('start');
+        // this.end=navParams.get('end');
+        this.eventKey = navParams.get('eventID');
+        this.creatorID = navParams.get('creatorID');
+        this.desc = navParams.get('desc');
+        this.imageID = navParams.get('imageID');
+        this.location = navParams.get('location');
+        this.myPhotoURL = navParams.get('imageID');
+        __WEBPACK_IMPORTED_MODULE_4_firebase___default.a.database().ref('userProfiles/').orderByChild('userID').equalTo(this.creatorID).once('child_added', function (dataSnap) {
+            _this.firstName = dataSnap.val().first;
+            _this.lastName = dataSnap.val().last;
+            _this.profilePic = dataSnap.val().photo;
+        });
+        if (this.creatorID == this.fAuth.auth.currentUser.uid) {
+            this.buttonTxt = "Delete";
+        }
+        else {
+            this.buttonTxt = "Join";
+        }
+        this.getPeopleAttending();
+        // this.eventID=navParams.get('eventID');
+        // this.button=navParams.get('button');
+        // this.userID=navParams.get('userID');
+        // this.usereventID=navParams.get('usereventID');
+        // alert(this.userID);
+        // this.getUser();
+        // this.getPeopleAttending();
+    }
+    EventInfoPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ChartPopupPage');
+    };
+    EventInfoPage.prototype.closeModal = function () {
+    };
+    EventInfoPage.prototype.viewAttendees = function () {
+        var myModal = this.modal.create('PeopleAttendingPage', { attendees: this.attendees });
+        myModal.present();
+    };
+    EventInfoPage.prototype.removeEvent = function () {
+        if (this.userID == this.databaseprovider.userID) {
+            alert("Event was deleted");
+            this.databaseprovider.removeEvent(this.eventID);
+        }
+        this.databaseprovider.removeUserFromEvent(this.usereventID);
+        var toast = this.toastCtrl.create({
+            message: 'Event was removed successfully',
+            duration: 3000,
+            position: 'bottom'
+        });
+        toast.present();
+    };
+    EventInfoPage.prototype.getPeopleAttending = function () {
+        var _this = this;
+        this.attendees = new Array();
+        this.keys = new Array();
+        __WEBPACK_IMPORTED_MODULE_4_firebase___default.a.database().ref('events/' + this.eventKey + '/users').on('child_added', function (dataSnap) {
+            _this.attendees.push(dataSnap.val());
+            _this.keys.push(dataSnap.key);
+        });
+    };
+    EventInfoPage.prototype.joinOrDeleteEvent = function () {
+        var _this = this;
+        if (this.buttonTxt == "Delete") {
+            __WEBPACK_IMPORTED_MODULE_4_firebase___default.a.database().ref('/events/' + this.eventKey).remove();
+            var toast = this.toastCtrl.create({
+                message: 'Event was removed successfully',
+                duration: 3000,
+                position: 'bottom'
+            });
+            toast.present();
+            this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__events_events__["a" /* EventsPage */]);
+        }
+        else if (this.buttonTxt == "Join") {
+            __WEBPACK_IMPORTED_MODULE_4_firebase___default.a.database().ref('/events/' + this.eventKey + '/users').push({
+                userID: this.fAuth.auth.currentUser.uid
+            });
+            __WEBPACK_IMPORTED_MODULE_4_firebase___default.a.database().ref('userProfiles/').orderByChild('userID').equalTo(this.fAuth.auth.currentUser.uid).once('child_added', function (dataSnap) {
+                _this.userKey = dataSnap.key;
+                _this.db.list('userProfiles/' + _this.userKey + '/events').push({
+                    evnt: _this.eventKey
+                });
+            });
+            var toast = this.toastCtrl.create({
+                message: 'You joined this event successfully',
+                duration: 3000,
+                position: 'bottom'
+            });
+            toast.present();
+        }
+    };
+    EventInfoPage.prototype.getUser = function () {
+        var _this = this;
+        this.databaseprovider.getDatabaseState().subscribe(function (rdy) {
+            _this.user = new Array();
+            if (rdy) {
+                _this.databaseprovider.getUser(_this.userID).then(function (data) {
+                    _this.user = data;
+                    for (var i = 0; i < _this.user.length; i++) {
+                        _this.firstName = _this.user[i].firstName;
+                        _this.lastName = _this.user[i].lastName;
+                    }
+                });
+            }
+        });
+    };
+    EventInfoPage.prototype.clickProfile = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__profile_profile__["a" /* ProfilePage */], {
+            userID: this.userID
+        });
+    };
+    EventInfoPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-event-info',template:/*ion-inline-start:"/Users/liamjameson/Desktop/YT_3/src/pages/event-info/event-info.html"*/'\n<ion-header >\n  \n  <ion-title>{{title}}</ion-title>\n\n</ion-header>\n\n<ion-content >\n\n  <ion-card >\n    <ion-item>\n      <ion-avatar (click)="clickProfile()" item-start>\n        <img src="{{profilePic}}">\n      </ion-avatar>\n      <h2 (click)="clickProfile()">{{firstName}} {{lastName}}</h2>\n    </ion-item>\n      <img src="{{myPhotoURL}}"/>\n      <ion-item>\n        <ion-icon name=\'heart-outline\'></ion-icon>\n        Likes\n        <ion-badge item-end>9</ion-badge>\n      </ion-item>\n      <ion-card-content>\n     \n        <p>\n         <!-- {{start}}-{{end}} -->\n        </p>\n  \n        <p>\n         {{desc}}\n        </p>\n        <ion-item>\n            <ion-icon name=\'md-pin\' ></ion-icon>\n            {{location}}\n            </ion-item>\n            <ion-item (click)="viewAttendees()">\n          <ion-icon name=\'md-people\'></ion-icon>\n          People Attending\n          <ion-badge item-end>{{attendees.length}}</ion-badge>\n        </ion-item>\n        <ion-item>\n          <ion-icon name=\'md-paper-plane\'></ion-icon>\n          Share With Friends\n          \n        </ion-item>\n        <button (click)="joinOrDeleteEvent()" ion-button small color="secondary">{{buttonTxt}}</button>\n      </ion-card-content>\n      \n    </ion-card>\n\n\n</ion-content>'/*ion-inline-end:"/Users/liamjameson/Desktop/YT_3/src/pages/event-info/event-info.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__["a" /* AngularFireAuth */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_database_database__["a" /* DatabaseProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ModalController */], __WEBPACK_IMPORTED_MODULE_5_angularfire2_database_deprecated__["a" /* AngularFireDatabase */]])
+    ], EventInfoPage);
+    return EventInfoPage;
+}());
+
+//# sourceMappingURL=event-info.js.map
+
+/***/ }),
+
 /***/ 213:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1307,15 +1307,15 @@ var map = {
 		10
 	],
 	"../pages/event-builder/event-builder.module": [
-		886,
+		885,
 		9
 	],
 	"../pages/event-info/event-info.module": [
-		885,
+		887,
 		8
 	],
 	"../pages/event-modal/event-modal.module": [
-		887,
+		886,
 		5
 	],
 	"../pages/login/login.module": [
@@ -1323,19 +1323,19 @@ var map = {
 		4
 	],
 	"../pages/mychats/mychats.module": [
-		889,
+		890,
 		7
 	],
 	"../pages/people-attending/people-attending.module": [
-		890,
+		889,
 		3
 	],
 	"../pages/profile/profile.module": [
-		891,
+		892,
 		6
 	],
 	"../pages/register/register.module": [
-		892,
+		891,
 		2
 	],
 	"../pages/reset-password/reset-password.module": [
@@ -2628,7 +2628,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_events_events__ = __webpack_require__(121);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_add_event_add_event__ = __webpack_require__(467);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_mychats_mychats__ = __webpack_require__(213);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_event_info_event_info__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_event_info_event_info__ = __webpack_require__(212);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24_angularfire2_database_deprecated__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25_angularfire2__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26_angularfire2_auth__ = __webpack_require__(51);
@@ -2639,7 +2639,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__providers_google_maps_cluster_google_maps_cluster__ = __webpack_require__(423);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__providers_google_maps2_google_maps2__ = __webpack_require__(883);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__providers_event_create_event_create__ = __webpack_require__(421);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_event_builder_event_builder__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_event_builder_event_builder__ = __webpack_require__(211);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__providers_auth_auth__ = __webpack_require__(468);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__providers_email_email__ = __webpack_require__(469);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__ionic_native_camera__ = __webpack_require__(189);
@@ -2723,14 +2723,14 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
                     links: [
                         { loadChildren: '../pages/add-event/add-event.module#AddEventPageModule', name: 'AddEventPage', segment: 'add-event', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/event-info/event-info.module#EventInfoPageModule', name: 'EventInfoPage', segment: 'event-info', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/event-builder/event-builder.module#EventBuilderPageModule', name: 'EventBuilderPage', segment: 'event-builder', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/event-modal/event-modal.module#EventModalPageModule', name: 'EventModalPage', segment: 'event-modal', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/event-info/event-info.module#EventInfoPageModule', name: 'EventInfoPage', segment: 'event-info', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/mychats/mychats.module#MychatsPageModule', name: 'MychatsPage', segment: 'mychats', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/people-attending/people-attending.module#PeopleAttendingPageModule', name: 'PeopleAttendingPage', segment: 'people-attending', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/mychats/mychats.module#MychatsPageModule', name: 'MychatsPage', segment: 'mychats', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/register/register.module#RegisterPageModule', name: 'RegisterPage', segment: 'register', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/profile/profile.module#ProfilePageModule', name: 'ProfilePage', segment: 'profile', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/reset-password/reset-password.module#ResetPasswordPageModule', name: 'ResetPasswordPage', segment: 'reset-password', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] }
                     ]
