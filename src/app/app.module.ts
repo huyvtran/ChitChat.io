@@ -36,6 +36,7 @@ import { EventBuilderPage } from '../pages/event-builder/event-builder';
 import { AuthProvider } from '../providers/auth/auth';
 import { EmailProvider } from '../providers/email/email';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Facebook } from '@ionic-native/facebook';
 
 var config = {
   apiKey: "AIzaSyCTJT08mbl9Vpp7x2G0WSrQpjf-0sRTEbY",
@@ -108,7 +109,8 @@ var config = {
     EventCreateProvider,
     AuthProvider,
     EmailProvider,
-    Camera
+    Camera,
+    Facebook
   ]
 })
 export class AppModule {}

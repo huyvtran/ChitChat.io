@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { EmailProvider } from '../../providers/email/email';
 import { LoginPage } from '../../pages/login/login';
+import  firebase  from 'firebase';
 
 @IonicPage()
 @Component({
