@@ -103,6 +103,22 @@ module.exports = [
     "clobbers": [
       "CameraPopoverHandle"
     ]
+  },
+  {
+    "id": "cordova-plugin-facebook4.FacebookConnectPlugin",
+    "file": "plugins/cordova-plugin-facebook4/www/facebook-native.js",
+    "pluginId": "cordova-plugin-facebook4",
+    "clobbers": [
+      "facebookConnectPlugin"
+    ]
+  },
+  {
+    "id": "cordova-plugin-statusbar.statusbar",
+    "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+    "pluginId": "cordova-plugin-statusbar",
+    "clobbers": [
+      "window.StatusBar"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -117,7 +133,9 @@ module.exports.metadata =
   "cordova-sqlite-storage": "2.2.0",
   "cordova-plugin-geolocation": "4.0.1",
   "cordova-plugin-network-information": "2.0.1",
-  "cordova-plugin-camera": "4.0.2"
+  "cordova-plugin-camera": "4.0.2",
+  "cordova-plugin-facebook4": "1.9.1",
+  "cordova-plugin-statusbar": "2.4.1"
 };
 // BOTTOM OF METADATA
 });

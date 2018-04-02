@@ -1,6 +1,6 @@
 webpackJsonp([5],{
 
-/***/ 887:
+/***/ 890:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EventModalPageModule", function() { return EventModalPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__event_modal__ = __webpack_require__(896);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__event_modal__ = __webpack_require__(899);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,14 +38,14 @@ var EventModalPageModule = (function () {
 
 /***/ }),
 
-/***/ 896:
+/***/ 899:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EventModalPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -100,7 +100,7 @@ var EventModalPage = (function () {
     };
     EventModalPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-event-modal',template:/*ion-inline-start:"/Users/michaelarnold/309project/src/pages/event-modal/event-modal.html"*/'<!--\n  Generated template for the EventModalPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n      <ion-title>{{title}}</ion-title>\n      <ion-buttons end>\n      <button ion-button (click)="closeModal()">Close</button>\n      </ion-buttons>\n  </ion-navbar>\n  \n  </ion-header>\n  \n  \n  <ion-content >\n\n    <ion-card >\n      <ion-item>\n        <ion-avatar (click)="clickProfile()" item-start>\n          <img src="{{profilePic}}">\n        </ion-avatar>\n        <h2 (click)="clickProfile()">{{firstName}} {{lastName}}</h2>\n      </ion-item>\n        <img src="{{myPhotoURL}}"/>\n        <ion-item>\n          <ion-icon name=\'heart-outline\'></ion-icon>\n          Likes\n          <ion-badge item-end>9</ion-badge>\n        </ion-item>\n        <ion-card-content>\n       \n          <p>\n           <!-- {{start}}-{{end}} -->\n          </p>\n    \n          <p>\n           {{desc}}\n          </p>\n          <ion-item>\n              <ion-icon name=\'md-pin\' ></ion-icon>\n              {{location}}\n              </ion-item>\n              <ion-item (click)="viewAttendees()">\n            <ion-icon name=\'md-people\'></ion-icon>\n            People Attending\n            <ion-badge item-end>{{attendees.length}}</ion-badge>\n          </ion-item>\n          <ion-item>\n            <ion-icon name=\'md-paper-plane\'></ion-icon>\n            Share With Friends\n            \n          </ion-item>\n          <button (click)="joinOrDeleteEvent()" ion-button small color="secondary">{{buttonTxt}}</button>\n        </ion-card-content>\n        \n      </ion-card>\n  \n  \n  </ion-content>\n'/*ion-inline-end:"/Users/michaelarnold/309project/src/pages/event-modal/event-modal.html"*/,
+            selector: 'page-event-modal',template:/*ion-inline-start:"/Users/liamjameson/Desktop/YT_3/src/pages/event-modal/event-modal.html"*/'<!--\n  Generated template for the EventModalPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n      <ion-title>{{title}}</ion-title>\n      <ion-buttons end>\n      <button ion-button (click)="closeModal()">Close</button>\n      </ion-buttons>\n  </ion-navbar>\n  \n  </ion-header>\n  \n  \n  <ion-content >\n\n    <ion-card >\n      <ion-item>\n        <ion-avatar (click)="clickProfile()" item-start>\n          <img src="{{profilePic}}">\n        </ion-avatar>\n        <h2 (click)="clickProfile()">{{firstName}} {{lastName}}</h2>\n      </ion-item>\n        <img src="{{myPhotoURL}}"/>\n        <ion-item>\n          <ion-icon name=\'heart-outline\'></ion-icon>\n          Likes\n          <ion-badge item-end>9</ion-badge>\n        </ion-item>\n        <ion-card-content>\n       \n          <p>\n           <!-- {{start}}-{{end}} -->\n          </p>\n    \n          <p>\n           {{desc}}\n          </p>\n          <ion-item>\n              <ion-icon name=\'md-pin\' ></ion-icon>\n              {{location}}\n              </ion-item>\n              <ion-item (click)="viewAttendees()">\n            <ion-icon name=\'md-people\'></ion-icon>\n            People Attending\n            <ion-badge item-end>{{attendees.length}}</ion-badge>\n          </ion-item>\n          <ion-item>\n            <ion-icon name=\'md-paper-plane\'></ion-icon>\n            Share With Friends\n            \n          </ion-item>\n          <button (click)="joinOrDeleteEvent()" ion-button small color="secondary">{{buttonTxt}}</button>\n        </ion-card-content>\n        \n      </ion-card>\n  \n  \n  </ion-content>\n'/*ion-inline-end:"/Users/liamjameson/Desktop/YT_3/src/pages/event-modal/event-modal.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */]])
     ], EventModalPage);
