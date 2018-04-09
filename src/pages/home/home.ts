@@ -7,6 +7,7 @@ import firebase from 'firebase';
 import { AngularFireDatabase } from 'angularfire2/database-deprecated';
 import { GoogleMapsClusterProvider } from '../../providers/google-maps-cluster/google-maps-cluster';
 import { GoogleMaps1 } from '../../providers/google-maps/google-maps';
+import { DirectMessagesPage } from '../direct-messages/direct-messages';
 declare var google;
  
 @Component({
@@ -49,7 +50,11 @@ export class HomePage {
   
     //  });
   }
-
+  clickDM(){
+    this.navCtrl.push(DirectMessagesPage, {
+       
+       });
+  }
   loadMap(){
    
     let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {

@@ -33,7 +33,8 @@ export class MychatsPage {
     
     this.navCtrl.push(ChatPage, {
        username:this.fAuth.auth.currentUser.displayName,
-       eventID:this.eventIDs[i]
+       eventID:this.eventIDs[i],
+       chatType:"event"
 
      });
   }

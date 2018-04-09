@@ -38,6 +38,7 @@ import { EmailProvider } from '../providers/email/email';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { SettingsPage } from '../pages/settings/settings';
+import { DirectMessagesPage } from '../pages/direct-messages/direct-messages';
 var config = {
   apiKey: "AIzaSyCTJT08mbl9Vpp7x2G0WSrQpjf-0sRTEbY",
   authDomain: "chat-c50e8.firebaseapp.com",
@@ -64,7 +65,8 @@ var config = {
     LocationSelectPage,
     AddEventPage,
     EventBuilderPage,
-    SettingsPage
+    SettingsPage,
+    DirectMessagesPage
     
   ],
   imports: [
@@ -91,7 +93,8 @@ var config = {
     LocationSelectPage,
     AddEventPage,
     EventBuilderPage,
-    SettingsPage
+    SettingsPage,
+    DirectMessagesPage
     
   ],
   providers: [
