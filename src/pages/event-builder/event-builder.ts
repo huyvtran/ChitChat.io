@@ -22,6 +22,7 @@ import firebase from 'firebase';
 })
 
 export class EventBuilderPage {
+  userKey: string;
   public eventCreateForm: FormGroup;
   public loading: Loading;
   userID: any;
@@ -34,12 +35,16 @@ export class EventBuilderPage {
    startTime
    endTime
    desc
+   friends:String
    event = {};
    events = new Array();
    allevents = new Array();
    max
    chart:any;
    pub
+   followers=new Array()
+   fol=new Array()
+   invites=new Array()
    lat
    lng
    public myPhotosRef: any;
@@ -62,6 +67,7 @@ export class EventBuilderPage {
     this.imageID='null'
     this.userID=this.fAuth.auth.currentUser.uid;
     this.myPhotosRef = firebase.storage().ref('/Photos/');
+    this.getFollowers()
       // this.eventCreateForm = formBuilder.group({
       //   eventName: [''],
       //   description: [''],
@@ -74,6 +80,9 @@ export class EventBuilderPage {
       //   lng:['']
       // });
     }
+    
+ 
+
     takePhoto() {
       this.camera.getPicture({
         quality: 100,
@@ -142,8 +151,41 @@ export class EventBuilderPage {
     });
       modal.present();   
     }
-    createEvent(){
+
+    loadUsers(){
+      alert(this.followers.length)
+      for(var i =0;i<this.followers.length;i++){
+       alert(this.followers[i].userID)
+        firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(this.followers[i].userID).on('child_added', (dataSnap) => {
+         alert(dataSnap.val().first)
+         
+          this.fol.push(dataSnap.val())
+          //this.keys.push(dataSnap.key)
+        });
+      }
+    }
+    getFollowers(){
+      firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(this.userID).once('child_added', (dataSnap) => {
+        
+        this.userKey=dataSnap.key
+        firebase.database().ref('userProfiles/'+this.userKey+'/followers').on('child_added', (dataSnap) => {
+             
+          this.followers.push(dataSnap.val())
+          firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(dataSnap.val().userID).on('child_added', (dataSnap) => {
+            
+            
+             this.fol.push(dataSnap.val())
+             //this.keys.push(dataSnap.key)
+           });
+       
+        });
+      
+      })
     
+    }
+    
+    createEvent(){
+   alert(this.friends)
       this.eventProvider.createEvent(this.myPhotoURL,this.userID,this.title, this.desc, this.location, this.startDate, this.startTime, this.endDate, this.endTime,this.lat,this.lng,this.pub)
       .then(() => {
         

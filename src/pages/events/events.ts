@@ -143,8 +143,9 @@ changeDate(){
     
    
       
-    var add=false;
+    
     firebase.database().ref('events/').orderByChild('eventStartTime').on('child_added', (dataSnap) => {
+      var add=false;
       if(this.date==dataSnap.val().eventStartDate){
         for(var i=0;i<this.pplYouFollow.length;i++){
           
@@ -153,11 +154,13 @@ changeDate(){
             this.keys.push(dataSnap.key)
             add=true;
           }
-        }if(add==false && dataSnap.val().public=="yes"){
+        }  if(add==false && dataSnap.val().public=="yes"){
           this.events.push(dataSnap.val())
           this.keys.push(dataSnap.key)
           add=true
         }else if(dataSnap.val().creatorID==this.fAuth.auth.currentUser.uid && add==false){
+          
+         
           this.events.push(dataSnap.val())
           this.keys.push(dataSnap.key)
           add=true
