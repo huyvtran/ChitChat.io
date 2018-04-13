@@ -5,7 +5,7 @@ import { EventsPage } from '../../pages/events/events';
 import { EventCreateProvider } from '../../providers/event-create/event-create';
 import { LocationSelectPage} from '../location-select/location-select';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase } from 'angularfire2/database-deprecated';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import firebase from 'firebase';
 /**
@@ -35,7 +35,7 @@ export class EventBuilderPage {
    startTime
    endTime
    desc
-   friends:String
+   friends
    event = {};
    events = new Array();
    allevents = new Array();
@@ -47,6 +47,9 @@ export class EventBuilderPage {
    invites=new Array()
    lat
    lng
+   friendArray=new Array()
+   fllw: FirebaseListObservable<any[]>;
+  fllwing: FirebaseListObservable<any[]>;
    public myPhotosRef: any;
    public myPhoto: any;
    public myPhotoURL: any;
@@ -67,7 +70,8 @@ export class EventBuilderPage {
     this.imageID='null'
     this.userID=this.fAuth.auth.currentUser.uid;
     this.myPhotosRef = firebase.storage().ref('/Photos/');
-    this.getFollowers()
+    
+    this.getFriends()
       // this.eventCreateForm = formBuilder.group({
       //   eventName: [''],
       //   description: [''],
@@ -164,6 +168,34 @@ export class EventBuilderPage {
         });
       }
     }
+    getFriends(){
+      firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(this.fAuth.auth.currentUser.uid).once('child_added', (dataSnap) => {
+        
+       var userKey=dataSnap.key
+       this.fllw=  this.db.list('userProfiles/'+userKey+'/followers')
+      this.fllwing=this.db.list('userProfiles/'+userKey+'/following')
+      this.fllw.subscribe(users=>{
+        users.forEach(item=>{
+          this.fllwing.subscribe(users2=>{
+            users2.forEach(item2=>{
+              if(item2.userID==item.userID){
+                firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(item.userID).once('child_added', (dataSnap) => {
+                  this.friendArray.push(dataSnap.val())
+                })
+              }
+            })
+            
+          })
+          
+  
+         })
+         
+         
+      });
+      
+      });
+  
+    }
     getFollowers(){
       firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(this.userID).once('child_added', (dataSnap) => {
         
@@ -185,7 +217,7 @@ export class EventBuilderPage {
     }
     
     createEvent(){
-   alert(this.friends)
+      
       this.eventProvider.createEvent(this.myPhotoURL,this.userID,this.title, this.desc, this.location, this.startDate, this.startTime, this.endDate, this.endTime,this.lat,this.lng,this.pub)
       .then(() => {
         

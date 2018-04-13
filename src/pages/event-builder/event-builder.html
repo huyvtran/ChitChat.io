@@ -72,7 +72,7 @@
       <ion-item>
         <ion-label>Invite Friends</ion-label>
         <ion-select  [(ngModel)]="friends"  multiple="true">
-          <ion-option *ngFor="let follower of followers; let i= index" [value]="follower.userID" (ionChange)="onSelectChange($event)" (ionSelect)="onChange()" >{{fol[i].first}} {{fol[i].last}}</ion-option>
+          <ion-option *ngFor="let follower of friendArray; let i= index" [value]="follower.userID" (ionChange)="onSelectChange($event)" (ionSelect)="onChange()" >{{follower.first}} {{follower.last}}</ion-option>
    
         </ion-select>
       </ion-item>

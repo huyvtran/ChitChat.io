@@ -18,6 +18,10 @@ import { FirebaseListObservable, AngularFireDatabase } from 'angularfire2/databa
 })
 export class DirectMessagesPage {
   userKey
+  fllw: FirebaseListObservable<any[]>;
+  fllwing: FirebaseListObservable<any[]>;
+  followers=new Array()
+  friends=new Array()
   peopleYouFollow=new Array()
   myChats=new Array();
   eventIDs=new Array();
@@ -27,6 +31,7 @@ export class DirectMessagesPage {
   constructor(public db: AngularFireDatabase,public fAuth: AngularFireAuth,private modal:ModalController,public navCtrl: NavController, public navParams: NavParams) {
     this.getPeopleYouFollow()
     this.getEvents()
+    this.getFriends()
   }
 
   ionViewDidLoad() {
@@ -35,6 +40,47 @@ export class DirectMessagesPage {
   startChat(){
     const myModal = this.modal.create('MessageFollowersPage',{attendees:this.peopleYouFollow});
     myModal.present();
+  }
+  getFriends(){
+    firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(this.fAuth.auth.currentUser.uid).once('child_added', (dataSnap) => {
+      
+     var userKey=dataSnap.key
+     this.fllw=  this.db.list('userProfiles/'+userKey+'/followers')
+    this.fllwing=this.db.list('userProfiles/'+userKey+'/following')
+    this.fllw.subscribe(users=>{
+      users.forEach(item=>{
+        this.fllwing.subscribe(users2=>{
+          users2.forEach(item2=>{
+            if(item2.userID==item.userID){
+              firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(item.userID).once('child_added', (dataSnap) => {
+                this.friends.push(dataSnap.val())
+              })
+            }
+          })
+          
+        })
+        
+
+       })
+       
+       
+    });
+    
+    });
+
+  }
+  getFollowers(){
+    firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(this.fAuth.auth.currentUser.uid).once('child_added', (dataSnap) => {
+      
+      this.userKey=dataSnap.key
+      firebase.database().ref('userProfiles/'+this.userKey+'/followers').on('child_added', (dataSnap) => {
+           
+        this.followers.push(dataSnap.val())
+      
+      });
+    
+    });
+  
   }
   getPeopleYouFollow(){
     firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(this.fAuth.auth.currentUser.uid).once('child_added', (dataSnap) => {
