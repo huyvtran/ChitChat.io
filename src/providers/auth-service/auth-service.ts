@@ -80,6 +80,10 @@ export class AuthService{
       });
     }
   }
+
+    public fbLogin(User) {
+      this.currentUser = User;
+    }
  
   public register(credentials) {
     if (credentials.email === null || credentials.password === null) {

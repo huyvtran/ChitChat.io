@@ -40,6 +40,8 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import { SettingsPage } from '../pages/settings/settings';
 import { DirectMessagesPage } from '../pages/direct-messages/direct-messages';
 import{ SocialSharing} from '@ionic-native/social-sharing'
+import { Facebook } from '@ionic-native/facebook';
+// Michael's Database
 var config = {
   apiKey: "AIzaSyCTJT08mbl9Vpp7x2G0WSrQpjf-0sRTEbY",
   authDomain: "chat-c50e8.firebaseapp.com",
@@ -48,6 +50,16 @@ var config = {
   storageBucket: "chat-c50e8.appspot.com",
   messagingSenderId: "101050978336"
 };
+
+// Liam's Database
+    // const config = {
+    //   apiKey: "AIzaSyCNATg5Q8TZqnxW3PhaqdMNfan9zobQMTs",
+    //   authDomain: "coms-309.firebaseapp.com",
+    //   databaseURL: "https://coms-309.firebaseio.com",
+    //   projectId: "coms-309",
+    //   storageBucket: "coms-309.appspot.com",
+    //   messagingSenderId: "769505137443"
+    // };
 
 
 @NgModule({
@@ -117,7 +129,11 @@ var config = {
     AuthProvider,
     EmailProvider,
     Camera,
+<<<<<<< src/app/app.module.ts
     NativeStorage
+=======
+    Facebook
+>>>>>>> src/app/app.module.ts
   ]
 })
 export class AppModule {}

@@ -1,0 +1,4 @@
+#Fri Mar 16 15:37:36 CDT 2018
+base.0=/Users/michaelarnold/309project/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0
+renamed.0=classes.dex
+file.0=/Users/michaelarnold/309project/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0/classes.dex
