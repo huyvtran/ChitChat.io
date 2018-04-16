@@ -62,6 +62,19 @@
         <ion-label stacked>Event End Time</ion-label>
         <ion-input [(ngModel)]="endTime" type="time" required="required"></ion-input>
       </ion-item>
-
+      <ion-item>
+        <ion-label>Public</ion-label>
+        <ion-select [(ngModel)]="pub">
+          <ion-option value="yes">Yes</ion-option>
+          <ion-option value="no">No</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Invite Friends</ion-label>
+        <ion-select  [(ngModel)]="friends"  multiple="true">
+          <ion-option *ngFor="let follower of friendArray; let i= index" [value]="follower.userID" (ionChange)="onSelectChange($event)" (ionSelect)="onChange()" >{{follower.first}} {{follower.last}}</ion-option>
+   
+        </ion-select>
+      </ion-item>
       <button ion-button full #btn (click)="createEvent()">Add</button>
 </ion-content>

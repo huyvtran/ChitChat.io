@@ -64,7 +64,14 @@ page-chat {
 		display: inline-block;
 		padding: 0 10px;
 	}
-
+	.eventimage{
+		margin: auto
+	}
+.eventtitle{
+	margin: auto;
+	font-weight: bold;
+	color:black;
+}
 	.message.special .innerMessage:before{
 		content: '';
 		height: 2px;
@@ -76,7 +83,12 @@ page-chat {
 		width: 100%;
 		z-index: -1;
 	}
-
+.hide{
+	visibility: hidden;
+}
+.event{
+	background: white
+}
 	.message.special .innerMessage{
 		background: transparent;
 		color: black;

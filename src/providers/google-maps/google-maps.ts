@@ -6,11 +6,13 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { DatabaseProvider } from '../../providers/database/database';
 import firebase from 'firebase';
-import { AngularFireDatabase } from 'angularfire2/database-deprecated';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
+import { AngularFireAuth } from 'angularfire2/auth';
 //import { EventInfoPage } from '../../pages/event-info/event-info';
 @Injectable()
 export class GoogleMaps1 {
- 
+  peopleYouFollow: FirebaseListObservable<any[]>;
+  pplYouFollow=new Array()
   mapElement: any;
   pleaseConnect: any;
   map: any;
@@ -19,8 +21,8 @@ export class GoogleMaps1 {
   mapLoadedObserver: any;
   currentMarker: any;
   apiKey: string = "AIzaSyBOzEUuY8CtG_Iq61bLQj6wVCcePsO_mn0";
- 
-  constructor(public connectivityService: ConnectivityServiceProvider, public geolocation: Geolocation, public modal:ModalController) {
+  userKey: string;
+  constructor(public db: AngularFireDatabase,public fAuth: AngularFireAuth,public connectivityService: ConnectivityServiceProvider, public geolocation: Geolocation, public modal:ModalController) {
  
   }
  
@@ -169,7 +171,7 @@ export class GoogleMaps1 {
  
         google.maps.event.addListenerOnce(this.map, 'idle', () => {
      
-            this.getMarkers();
+            this.getPeopleYouFollow();
      
           
         });
@@ -180,6 +182,30 @@ export class GoogleMaps1 {
     });
  
   }
+  getPeopleYouFollow():any{
+    this.pplYouFollow=new Array()
+   firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(this.fAuth.auth.currentUser.uid).once('child_added', (dataSnap) => {
+     
+     this.userKey=dataSnap.key
+     this.peopleYouFollow=  this.db.list('userProfiles/'+this.userKey+'/following')
+          this.peopleYouFollow.subscribe(users=>{
+            users.forEach(item=>{
+              this.pplYouFollow.push(item.userID)
+ 
+             })
+             
+             this.getMarkers()
+          });
+          
+     
+     })
+   
+  
+
+   
+ 
+ 
+ }
   getMarkers(){
     firebase.database().ref('/events').on('child_added', (dataSnap) => {
       var offset=new Date().getTimezoneOffset()/60
@@ -189,10 +215,22 @@ export class GoogleMaps1 {
      endDate.setHours(endDate.getHours()-offset) 
       var currentTime= new Date();
        currentTime.setHours(currentTime.getHours()-offset)
- 
-      if(currentTime>startDate && currentTime<endDate){
-       
-         this.addMarker({lat:dataSnap.val().eventLat,lng:dataSnap.val().eventLng}, this.map,dataSnap.val().eventName, dataSnap.val(),dataSnap.key)
+ var add=false
+      if(currentTime>startDate && currentTime<endDate ){
+        for(var i=0;i<this.pplYouFollow.length;i++){
+          
+          if(this.pplYouFollow[i]==dataSnap.val().creatorID){
+            this.addMarker({lat:dataSnap.val().eventLat,lng:dataSnap.val().eventLng}, this.map,dataSnap.val().eventName, dataSnap.val(),dataSnap.key)
+            add=true;
+          }
+        }if(add==false && dataSnap.val().public=="yes"){
+          this.addMarker({lat:dataSnap.val().eventLat,lng:dataSnap.val().eventLng}, this.map,dataSnap.val().eventName, dataSnap.val(),dataSnap.key)
+          add=true
+        }else if(dataSnap.val().creatorID==this.fAuth.auth.currentUser.uid && add==false){
+          this.addMarker({lat:dataSnap.val().eventLat,lng:dataSnap.val().eventLng}, this.map,dataSnap.val().eventName, dataSnap.val(),dataSnap.key)
+          add=true
+        }
+         
       }
             
          });

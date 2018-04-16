@@ -36,8 +36,11 @@ import { EventBuilderPage } from '../pages/event-builder/event-builder';
 import { AuthProvider } from '../providers/auth/auth';
 import { EmailProvider } from '../providers/email/email';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { NativeStorage } from '@ionic-native/native-storage';
+import { SettingsPage } from '../pages/settings/settings';
+import { DirectMessagesPage } from '../pages/direct-messages/direct-messages';
+import{ SocialSharing} from '@ionic-native/social-sharing'
 import { Facebook } from '@ionic-native/facebook';
-
 // Michael's Database
 var config = {
   apiKey: "AIzaSyCTJT08mbl9Vpp7x2G0WSrQpjf-0sRTEbY",
@@ -74,7 +77,9 @@ var config = {
     ChatPage,
     LocationSelectPage,
     AddEventPage,
-    EventBuilderPage
+    EventBuilderPage,
+    SettingsPage,
+    DirectMessagesPage
     
   ],
   imports: [
@@ -100,7 +105,9 @@ var config = {
     ChatPage,
     LocationSelectPage,
     AddEventPage,
-    EventBuilderPage
+    EventBuilderPage,
+    SettingsPage,
+    DirectMessagesPage
     
   ],
   providers: [
@@ -111,6 +118,7 @@ var config = {
     DatabaseProvider,
     SQLitePorter,
     SQLite,
+    SocialSharing,
     Geolocation,
     ConnectivityServiceProvider,
     GoogleMaps1,
@@ -121,7 +129,11 @@ var config = {
     AuthProvider,
     EmailProvider,
     Camera,
+<<<<<<< src/app/app.module.ts
+    NativeStorage
+=======
     Facebook
+>>>>>>> src/app/app.module.ts
   ]
 })
 export class AppModule {}

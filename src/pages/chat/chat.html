@@ -18,8 +18,15 @@ Ionic pages and navigation.
   <div id="chatMessages">
     <div *ngFor="let message of messages" [class]="message.specialMessage ? 'message special' : 'message'">
       <div [class]="message.username == username ? 'innerMessage messageRight' : 'innerMessage messageLeft'">
+        
         <div class="username">{{ message.username }}</div>
+        <div [class]="message.event ? 'event' : 'hide'" (click)="openEventInfo(message.eventID)">
+            <div class="eventtitle">{{message.eventName}}</div>
+        <div class="eventimage">  <ion-img width="100" height="75" src={{message.eventImage}}></ion-img></div>
+        
+      </div>
         <div class="messageContent">{{ message.message }}</div>
+      
       </div>
     </div>
   </div>
