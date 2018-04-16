@@ -11,6 +11,9 @@ import { AddEventPage } from '../add-event/add-event';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FirebaseListObservable, AngularFireDatabase } from 'angularfire2/database-deprecated';
 
+import { query } from '@angular/core/src/animation/dsl';
+
+
 export class Event{
   description
   location
@@ -32,9 +35,10 @@ export class Event{
 
 export class EventsPage {
   userKey: string;
+  query
   username = '';
   email = '';
-  events=new Array();
+  events=[];
   allevents = new Array();
   keys = new Array();
   peopleYouFollow: FirebaseListObservable<any[]>;
@@ -44,7 +48,7 @@ export class EventsPage {
   today
   date
   fire: FirebaseListObservable<any[]>
-  constructor(public db: AngularFireDatabase,public fAuth: AngularFireAuth,public navCtrl: NavController, private auth: AuthService, private databaseprovider: DatabaseProvider,private modal:ModalController,private toastCtrl: ToastController) {
+  constructor( public db: AngularFireDatabase,public fAuth: AngularFireAuth,public navCtrl: NavController, private auth: AuthService, private databaseprovider: DatabaseProvider,private modal:ModalController,private toastCtrl: ToastController) {
     // let info = this.auth.getUserInfo();
     // this.username = info['firstname'];
     // this.email = info['email'];
@@ -63,7 +67,7 @@ export class EventsPage {
       this.keys.splice(i,1);
    //   console.log(this.events[i]);
   }
- 
+
    getPeopleYouFollow():any{
      this.pplYouFollow=new Array()
     firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(this.fAuth.auth.currentUser.uid).once('child_added', (dataSnap) => {
@@ -87,6 +91,18 @@ export class EventsPage {
     
   
   
+  }
+
+
+  searchPlace(){
+    var q =this.query
+   if(q==""){
+     this.events=new Array()
+     this.getEvents()
+   }
+   this.events=this.events.filter(function(el) {
+      return el.eventName.toLowerCase().indexOf(q.toLowerCase()) > -1;
+  })
   }
 
   ionViewDidEnter(){

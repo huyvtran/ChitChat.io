@@ -215,10 +215,10 @@ export class EventBuilderPage {
       })
     
     }
-    
+  
     createEvent(){
-      
-      this.eventProvider.createEvent(this.myPhotoURL,this.userID,this.title, this.desc, this.location, this.startDate, this.startTime, this.endDate, this.endTime,this.lat,this.lng,this.pub)
+     
+      this.eventProvider.createEvent(this.myPhotoURL,this.userID,this.title, this.desc, this.location, this.startDate, this.startTime, this.endDate, this.endTime,this.lat,this.lng,this.pub,this.friends)
       .then(() => {
         
         this.loading.dismiss().then( () => {

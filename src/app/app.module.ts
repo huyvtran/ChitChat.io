@@ -39,6 +39,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { SettingsPage } from '../pages/settings/settings';
 import { DirectMessagesPage } from '../pages/direct-messages/direct-messages';
+import{ SocialSharing} from '@ionic-native/social-sharing'
 var config = {
   apiKey: "AIzaSyCTJT08mbl9Vpp7x2G0WSrQpjf-0sRTEbY",
   authDomain: "chat-c50e8.firebaseapp.com",
@@ -105,6 +106,7 @@ var config = {
     DatabaseProvider,
     SQLitePorter,
     SQLite,
+    SocialSharing,
     Geolocation,
     ConnectivityServiceProvider,
     GoogleMaps1,

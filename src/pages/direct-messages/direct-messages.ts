@@ -38,7 +38,7 @@ export class DirectMessagesPage {
     console.log('ionViewDidLoad DirectMessagesPage');
   }
   startChat(){
-    const myModal = this.modal.create('MessageFollowersPage',{attendees:this.peopleYouFollow});
+    const myModal = this.modal.create('MessageFollowersPage',{attendees:this.peopleYouFollow,chats:this.myChats});
     myModal.present();
   }
   getFriends(){
@@ -132,7 +132,7 @@ export class DirectMessagesPage {
        var ids=new Array()
         this.eventIDs.push(dataSnap.val().messageID)
 
-alert(dataSnap.val().messageID)
+
        this.peopleInChat=this.db.list('DirectMessages/'+dataSnap.val().messageID+'/users')
        this.peopleInChat.subscribe(users=>{
         
@@ -143,7 +143,7 @@ alert(dataSnap.val().messageID)
             
             var name=dataSnap.val().first+" "+ dataSnap.val().last+" ";
             if(dataSnap.val().userID!=this.fAuth.auth.currentUser.uid){
-              alert(dataSnap.val().first+" "+ dataSnap.val().last)
+             
             this.names.push(dataSnap.val().first+" "+ dataSnap.val().last)}
          //  dataSnap.val().photo;
             

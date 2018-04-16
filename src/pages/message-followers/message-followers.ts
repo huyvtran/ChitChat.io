@@ -4,9 +4,10 @@ import { ViewController } from 'ionic-angular';
 import { ProfilePage } from '../profile/profile';
 import { DatabaseProvider } from './../../providers/database/database';
 import firebase from 'firebase';
-import { AngularFireDatabase } from 'angularfire2/database-deprecated';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { DirectMessagesPage } from '../direct-messages/direct-messages';
+import { ChatPage } from '../chat/chat';
 
 /**
  * Generated class for the MessageFollowersPage page.
@@ -21,14 +22,15 @@ import { DirectMessagesPage } from '../direct-messages/direct-messages';
   templateUrl: 'message-followers.html',
 })
 export class MessageFollowersPage {
-
+  ch: FirebaseListObservable<any[]>;
   userKey: string;
   userKey2: string;
   attendeesIDs=new Array();
   attendees=new Array();
-
+  chats=new Array();
   constructor(public db: AngularFireDatabase,public navCtrl: NavController, public navParams: NavParams, public viewController:ViewController, private databaseprovider: DatabaseProvider,public fAuth: AngularFireAuth) {
     this.attendeesIDs=navParams.get('attendees');
+   //this.chats=navParams.get('chats')
     for(var i =0;i<this.attendeesIDs.length;i++){
       firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(this.attendeesIDs[i].userID).on('child_added', (dataSnap) => {
       
@@ -37,22 +39,52 @@ export class MessageFollowersPage {
       });
     }
   
-      
+      this.getChats()
     
   }
-
+getChats(){
+  firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(this.fAuth.auth.currentUser.uid).once('child_added', (dataSnap) => {
+ 
+    this.userKey=dataSnap.key
+    
+    firebase.database().ref('userProfiles/'+this.userKey+'/DMs').on('child_added', (dataSnap) => {
+this.chats.push(dataSnap.val().messageID)
+    })
+  })
+}
   ionViewDidLoad() {
 
   
   }
   clickPerson(a, i){
+    var add=true
+  for(var z=0;z<this.chats.length;z++){
+   
+    firebase.database().ref('DirectMessages/'+this.chats[i]+'/users').on('child_added', (dataSnap) => {
+
+  if(a.userID==dataSnap.val().userID){
+    this.navCtrl.push(ChatPage, {
+      username:this.fAuth.auth.currentUser.displayName,
+      eventID:this.chats[z],
+      chatType:"direct"
+
+    });
+    add=false
+  }
+    })
+    
+ 
+  }
+  if(add==true){
     this.db.list('DirectMessages/').push({
       
     }).then((message)=>{
       firebase.database().ref('userProfiles/').orderByChild('userID').equalTo(this.fAuth.auth.currentUser.uid).once('child_added', (dataSnap) => {
  
         this.userKey=dataSnap.key
-       
+        firebase.database().ref('userProfiles/'+this.userKey+'/DMs').on('child_added', (dataSnap) => {
+
+        })
        
       }).then(()=>{
         this.db.list('userProfiles/'+this.userKey+'/DMs').push({
@@ -69,7 +101,12 @@ export class MessageFollowersPage {
           messageID:message.key
         })
       })
-      this.navCtrl.setRoot(DirectMessagesPage);
+      this.navCtrl.push(ChatPage, {
+        username:this.fAuth.auth.currentUser.displayName,
+        eventID:message.key,
+        chatType:"direct"
+  
+      });
 
       this.db.list('DirectMessages/'+message.key+'/users').push({
         userID:a.userID
@@ -83,5 +120,5 @@ export class MessageFollowersPage {
     //   userID: a.userID
     //  });
   }
-
+  }
 }

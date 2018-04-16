@@ -7,6 +7,7 @@ import { AngularFireDatabase } from 'angularfire2/database-deprecated';
 import { FirebaseDatabase } from '@firebase/database-types';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { EventsPage } from '../events/events';
+import{ SocialSharing} from '@ionic-native/social-sharing'
 /**
  * Generated class for the EventInfoPage page.
  *
@@ -45,7 +46,7 @@ export class EventInfoPage {
   public myPhotosRef: any;
   public myPhoto: any;
   public myPhotoURL: any;
-  constructor(public fAuth: AngularFireAuth,public navCtrl: NavController, public navParams: NavParams, private databaseprovider: DatabaseProvider,private toastCtrl: ToastController,private modal:ModalController,public db: AngularFireDatabase) {
+  constructor(public socialSharing:SocialSharing,public fAuth: AngularFireAuth,public navCtrl: NavController, public navParams: NavParams, private databaseprovider: DatabaseProvider,private toastCtrl: ToastController,private modal:ModalController,public db: AngularFireDatabase) {
     this.title=navParams.get('title');
     // this.start=navParams.get('start');
     // this.end=navParams.get('end');
@@ -188,7 +189,36 @@ toast.present()
 
 
 }
+shareTwitter(){
+  this.socialSharing.shareViaTwitter("Hello", null, null).then(()=>{
 
+    console.log("Twitter SUCCESS");
+
+  }).catch(() => {
+
+    console.log("Twitter FAILURE");
+  });
+}
+shareFacebook(){
+  this.socialSharing.shareViaFacebook("Hello join my event", null, null).then(()=>{
+
+    console.log("Fb SUCCESS");
+
+  }).catch(() => {
+
+    console.log("Fb FAILURE");
+  });
+}
+shareInstagram(){
+  this.socialSharing.shareViaInstagram("Hello join", null).then(()=>{
+
+    console.log("Insta SUCCESS");
+
+  }).catch(() => {
+
+    console.log("Insta FAILURE");
+  });
+}
 getUser(){
   this.databaseprovider.getDatabaseState().subscribe(rdy => {
     this.user=new Array();

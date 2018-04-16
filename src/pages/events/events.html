@@ -11,6 +11,7 @@
 </ion-header>
 
 <ion-content >
+  
   <div ion-fixed id="dateheader">
     <table id="datetable"style="text-align:center" >
         <tr>
@@ -23,6 +24,7 @@
       </table>
  </div>
  <div class="main-content">
+    <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()"></ion-searchbar>
         <ion-card  *ngFor="let event of events; let i= index"  >
            
             <ion-item (click)="clickEvent(event, i)"> 
@@ -67,6 +69,6 @@
   <ion-fab (click)="clickAddEvent()">
     <button ion-fab><ion-icon class="custom-icon" name="add" ></ion-icon></button>
   </ion-fab>
-  
+
 
 </ion-content>
