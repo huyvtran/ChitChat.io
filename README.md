@@ -16,7 +16,5 @@ Deployable on both IOS and Android devices
 
 ## Built With
 
-Cordova
-Google Firebase
-Ionic.io
+Cordova, Google Firebase, Ionic.io
 
